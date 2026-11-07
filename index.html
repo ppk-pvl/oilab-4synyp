@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel-дегі математикалық функциялар - Интерактивті тапсырмалар</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="bg-emerald-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-file-excel text-3xl text-emerald-300"></i>
+                <h1 class="text-xl sm:text-2xl font-bold tracking-tight">Excel Математикалық Функциялары</h1>
+            </div>
+            <!-- Tab Navigation -->
+            <nav class="flex bg-emerald-800/60 p-1 rounded-xl gap-1 text-sm font-medium w-full sm:w-auto justify-center">
+                <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn px-4 py-2 rounded-lg transition-all bg-white text-emerald-800 shadow">
+                    <i class="fa-solid fa-trophy mr-1"></i> 1. Баллдық Викторина
+                </button>
+                <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn px-4 py-2 rounded-lg transition-all text-emerald-100 hover:text-white hover:bg-emerald-700/50">
+                    <i class="fa-solid fa-puzzle-piece mr-1"></i> 2. Сәйкестендіру
+                </button>
+                <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn px-4 py-2 rounded-lg transition-all text-emerald-100 hover:text-white hover:bg-emerald-700/50">
+                    <i class="fa-solid fa-graduation-cap mr-1"></i> 3. Экспресс-Тест
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6">
+
+        <!-- TAB 1: POINT QUIZ (Баллдық Викторина Тапсырмасы) -->
+        <section id="tab1" class="tab-content block space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 border-b pb-3">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">1-Тапсырма</span>
+                        <h2 class="text-xl font-bold text-slate-800">Интерактивті Баллдық Викторина</h2>
+                    </div>
+                    <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-1.5 rounded-xl font-bold">
+                        Жинаған балл: <span id="user-score" class="text-xl text-emerald-600">0</span>
+                    </div>
+                </div>
+                <p class="text-slate-600 mb-6">
+                    Қалаған тақырып бойынша <b>10, 20, 30 баллдық</b> ұяшықтардың бірін таңдаңыз. Сұраққа жауап беріп, «Жауапты көрсету» батырмасын басу арқылы өзіңізді тексеріңіз!
+                </p>
+
+                <!-- Jeopardy Board Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Category 1 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
+                        <h3 class="font-bold text-slate-700 text-lg mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-emerald-600"></i> СУММ & ABS
+                        </h3>
+                        <div class="w-full space-y-3">
+                            <button onclick="openQuestion('cat1', 10)" id="btn-cat1-10" class="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">10 Балл</button>
+                            <button onclick="openQuestion('cat1', 20)" id="btn-cat1-20" class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">20 Балл</button>
+                            <button onclick="openQuestion('cat1', 30)" id="btn-cat1-30" class="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">30 Балл</button>
+                        </div>
+                    </div>
+
+                    <!-- Category 2 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
+                        <h3 class="font-bold text-slate-700 text-lg mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-square-root-variable text-blue-600"></i> КОРЕНЬ & СТЕПЕНЬ
+                        </h3>
+                        <div class="w-full space-y-3">
+                            <button onclick="openQuestion('cat2', 10)" id="btn-cat2-10" class="w-full py-4 bg-blue-500 hover:bg-blue-600 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">10 Балл</button>
+                            <button onclick="openQuestion('cat2', 20)" id="btn-cat2-20" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">20 Балл</button>
+                            <button onclick="openQuestion('cat2', 30)" id="btn-cat2-30" class="w-full py-4 bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">30 Балл</button>
+                        </div>
+                    </div>
+
+                    <!-- Category 3 -->
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
+                        <h3 class="font-bold text-slate-700 text-lg mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-filter text-purple-600"></i> СУММЕСЛИ & Ережелер
+                        </h3>
+                        <div class="w-full space-y-3">
+                            <button onclick="openQuestion('cat3', 10)" id="btn-cat3-10" class="w-full py-4 bg-purple-500 hover:bg-purple-600 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">10 Балл</button>
+                            <button onclick="openQuestion('cat3', 20)" id="btn-cat3-20" class="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">20 Балл</button>
+                            <button onclick="openQuestion('cat3', 30)" id="btn-cat3-30" class="w-full py-4 bg-purple-700 hover:bg-purple-800 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">30 Балл</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Question Modal -->
+        <div id="question-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-slate-100 flex flex-col">
+                <!-- Modal Header -->
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <span id="modal-points" class="bg-emerald-100 text-emerald-800 text-sm font-extrabold px-3 py-1 rounded-full"></span>
+                    <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold focus:outline-none">&times;</button>
+                </div>
+                
+                <!-- Modal Body -->
+                <div class="space-y-4 my-2">
+                    <h3 id="modal-question" class="text-lg font-bold text-slate-800"></h3>
+                    
+                    <!-- Answer box (Hidden initially) -->
+                    <div id="modal-answer-box" class="hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+                        <span class="text-xs font-bold text-emerald-700 uppercase block mb-1">Дұрыс жауабы:</span>
+                        <p id="modal-answer" class="text-base font-semibold text-emerald-900"></p>
+                    </div>
+                </div>
+
+                <!-- Modal Actions -->
+                <div class="flex flex-wrap gap-2 justify-end border-t pt-4 mt-4">
+                    <button id="btn-show-ans" onclick="toggleAnswer()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-sm transition">
+                        <i class="fa-solid fa-eye mr-1"></i> Жауапты көрсету
+                    </button>
+                    <button id="btn-add-points" onclick="claimPoints()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg text-sm transition hidden">
+                        <i class="fa-solid fa-plus-circle mr-1"></i> Баллды қосу және жабу
+                    </button>
+                    <button onclick="closeModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold rounded-lg text-sm transition">
+                        Жабу
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: MATCHING GAME (Сәйкестендіру Тапсырмасы) -->
+        <section id="tab2" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 border-b pb-3">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase">2-Тапсырма</span>
+                        <h2 class="text-xl font-bold text-slate-800">Интерактивті Жұп Табу (Click to Match)</h2>
+                    </div>
+                    <button onclick="initMatching()" class="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg font-semibold transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Қайта бастау
+                    </button>
+                </div>
+                <p class="text-slate-600 mb-6">
+                    <b>Нұсқаулық:</b> Алдымен сол жақтан <b>функцияны</b> басыңыз, сосын оған сәйкес келетін оң жақтағы <b>сипаттаманы</b> таңдаңыз!
+                </p>
+
+                <!-- Click-to-Match Interactive Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-start">
+                    <!-- Left Column: Functions -->
+                    <div class="space-y-3">
+                        <h3 class="font-bold text-slate-700 text-center mb-2 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-code text-blue-600"></i> Функциялар
+                        </h3>
+                        <div id="matching-functions-list" class="space-y-3">
+                            <!-- JS render -->
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Descriptions -->
+                    <div class="space-y-3">
+                        <h3 class="font-bold text-slate-700 text-center mb-2 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-align-left text-emerald-600"></i> Сипаттамасы мен қызметі
+                        </h3>
+                        <div id="matching-descs-list" class="space-y-3">
+                            <!-- JS render -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="matching-result" class="mt-8 p-4 rounded-xl text-center font-semibold text-lg hidden"></div>
+            </div>
+        </section>
+
+        <!-- TAB 3: QUIZ (Тест Тапсырмасы) -->
+        <section id="tab3" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4 border-b pb-3">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full uppercase">3-Тапсырма</span>
+                        <h2 class="text-xl font-bold text-slate-800">Математикалық Функциялар Тесті</h2>
+                    </div>
+                </div>
+                
+                <form id="quiz-form" class="space-y-6 max-w-4xl mx-auto">
+                    <!-- Q1 -->
+                    <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+                        <p class="font-semibold text-slate-800">1. Санның модулін (абсолюттік мәнін) қайтаратын функцияны көрсетіңіз:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q1" value="A" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-mono">=КОРЕНЬ()</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q1" value="B" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-mono">=ABS()</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q1" value="C" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-mono">=СТЕПЕНЬ()</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q1" value="D" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-mono">=СУММ()</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+                        <p class="font-semibold text-slate-800">2. <code class="bg-slate-200 px-1 py-0.5 rounded text-emerald-700">=КОРЕНЬ(49)</code> формуласының нәтижесі неге тең болады?</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q2" value="A" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2">49</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q2" value="B" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2">7</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q2" value="C" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2">-7</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q2" value="D" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2">2401</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+                        <p class="font-semibold text-slate-800">3. Берілген шартқа сәйкес келетін сандардың қосындысын есептейтін функция:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q3" value="A" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-mono">=СУММ()</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q3" value="B" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-mono">=СУММЕСЛИ()</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q3" value="C" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-mono">=ABS()</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q3" value="D" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-mono">=СТЕПЕНЬ()</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+                        <p class="font-semibold text-slate-800">4. Excel-де формула қандай белгіден басталады?</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q4" value="A" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-bold">+</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q4" value="B" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-bold">:</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q4" value="C" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-bold">=</span>
+                            </label>
+                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
+                                <input type="radio" name="q4" value="D" class="w-4 h-4 text-purple-600">
+                                <span class="ml-2 font-bold font-mono">;</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-4">
+                        <button type="button" onclick="checkQuiz()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3 rounded-xl shadow-md transition-all transform active:scale-95">
+                            <i class="fa-solid fa-paper-plane mr-2"></i> Тестті Аяқтау
+                        </button>
+                    </div>
+                </form>
+
+                <div id="quiz-result" class="mt-6 p-6 rounded-xl text-center hidden"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-400 text-center py-4 text-sm mt-auto">
+        <p>© Excel Оқыту Интерактивті Порталы. Информатика сабағына арналған.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Tab switching logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-emerald-800', 'shadow');
+                btn.classList.add('text-emerald-100', 'hover:text-white', 'hover:bg-emerald-700/50');
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.add('bg-white', 'text-emerald-800', 'shadow');
+            activeBtn.classList.remove('text-emerald-100', 'hover:text-white', 'hover:bg-emerald-700/50');
+        }
+
+        // --- TASK 1: JEOPARDY QUIZ LOGIC ---
+        const questionsData = {
+            cat1: {
+                10: { q: "=СУММ(5; 7; 3) өрнегінің нәтижесі неге тең болады?", a: "15 (барлық сандар қосылады)" },
+                20: { q: "=ABS(-24) функциясы қандай мән қайтарады?", a: "24 (санның оң модулін қайтарады)" },
+                30: { q: "СУММ функциясында ұяшықтар диапазонын қалай көрсетеміз?", a: "=СУММ(A2:A4) түрінде қос нүкте арқылы жазамыз." }
+            },
+            cat2: {
+                10: { q: "=КОРЕНЬ(49) өрнегінің мәні неге тең?", a: "7 (49-дың квадрат түбірі 7-ге тең)" },
+                20: { q: "=СТЕПЕНЬ(5; 2) өрнегі не істейді және нәтижесі қанша?", a: "5-ті 2 дәрежесіне көтереді. Нәтижесі: 25" },
+                30: { q: "КОРЕНЬ() функциясының аргументіне теріс сан жазуға бола ма?", a: "Болмайды! Функция аргументі әрқашан теріс емес сан болуы тиіс." }
+            },
+            cat3: {
+                10: { q: "Excel-де кез келген формула қандай белгіден басталуы тиіс?", a: "= (тең) белгісінен басталады" },
+                20: { q: "=СУММЕСЛИ(B2:B6; \">=5\"; C2:C6) формуласында \">=5\" нені білдіреді?", a: "Есептеуге алынатын сандарға қойылған шартты білдіреді." },
+                30: { q: "Excel-де формуланың аргументтері бір-бірінен қандай белгімен бөлінеді?", a: "; (нүктелі үтір) белгісімен бөлінеді" }
+            }
+        };
+
+        let currentPoints = 0;
+        let currentBtnId = null;
+        let totalScore = 0;
+
+        function openQuestion(cat, points) {
+            currentPoints = points;
+            currentBtnId = `btn-${cat}-${points}`;
+
+            const qData = questionsData[cat][points];
+            document.getElementById('modal-points').innerText = `${points} Балл Сұрағы`;
+            document.getElementById('modal-question').innerText = qData.q;
+            document.getElementById('modal-answer').innerText = qData.a;
+
+            document.getElementById('modal-answer-box').classList.add('hidden');
+            document.getElementById('btn-add-points').classList.add('hidden');
+            document.getElementById('btn-show-ans').classList.remove('hidden');
+
+            const modal = document.getElementById('question-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function toggleAnswer() {
+            document.getElementById('modal-answer-box').classList.remove('hidden');
+            document.getElementById('btn-show-ans').classList.add('hidden');
+            document.getElementById('btn-add-points').classList.remove('hidden');
+        }
+
+        function claimPoints() {
+            totalScore += currentPoints;
+            document.getElementById('user-score').innerText = totalScore;
+
+            if (currentBtnId) {
+                const btn = document.getElementById(currentBtnId);
+                btn.disabled = true;
+                btn.classList.remove('bg-emerald-500', 'bg-emerald-600', 'bg-emerald-700', 'bg-blue-500', 'bg-blue-600', 'bg-blue-700', 'bg-purple-500', 'bg-purple-600', 'bg-purple-700');
+                btn.classList.add('bg-slate-300', 'text-slate-500', 'line-through', 'cursor-not-allowed');
+                btn.innerHTML = `<i class="fa-solid fa-check"></i> ${currentPoints}`;
+            }
+
+            closeModal();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('question-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // --- TASK 2: CLICK TO MATCH GAME LOGIC ---
+        const matchingPairs = [
+            { id: 1, func: "=СУММ()", desc: "Сандарды немесе ұяшықтар диапазонының қосындысын есептейді" },
+            { id: 2, func: "=ABS()", desc: "Санның модулін (абсолюттік оң мәнін) қайтарады" },
+            { id: 3, func: "=КОРЕНЬ()", desc: "Санның квадрат түбірін есептейді (аргумент оң болуы тиіс)" },
+            { id: 4, func: "=СТЕПЕНЬ()", desc: "Санды көрсетілген дәрежеге көтереді" },
+            { id: 5, func: "=СУММЕСЛИ()", desc: "Берілген арнайы шартқа сәйкес келетін сандарды қосады" }
+        ];
+
+        let selectedFuncId = null;
+        let matchedPairsCount = 0;
+
+        function initMatching() {
+            selectedFuncId = null;
+            matchedPairsCount = 0;
+
+            const funcListContainer = document.getElementById('matching-functions-list');
+            const descListContainer = document.getElementById('matching-descs-list');
+            const resDiv = document.getElementById('matching-result');
+            
+            resDiv.classList.add('hidden');
+            resDiv.className = "mt-8 p-4 rounded-xl text-center font-semibold text-lg hidden";
+
+            funcListContainer.innerHTML = '';
+            descListContainer.innerHTML = '';
+
+            // Render Functions (left side)
+            matchingPairs.forEach(item => {
+                const btn = document.createElement('button');
+                btn.id = `func-btn-${item.id}`;
+                btn.onclick = () => selectFunc(item.id);
+                btn.className = "w-full p-4 text-left font-mono text-lg font-bold text-slate-700 bg-white border-2 border-slate-200 rounded-xl shadow-sm hover:border-blue-400 hover:bg-blue-50/50 transition flex justify-between items-center";
+                btn.innerHTML = `<span>${item.func}</span> <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>`;
+                funcListContainer.appendChild(btn);
+            });
+
+            // Shuffle Descriptions for Right side
+            const shuffled = [...matchingPairs].sort(() => Math.random() - 0.5);
+
+            // Render Descriptions (right side)
+            shuffled.forEach(item => {
+                const btn = document.createElement('button');
+                btn.id = `desc-btn-${item.id}`;
+                btn.onclick = () => selectDesc(item.id);
+                btn.className = "w-full p-4 text-left text-sm font-medium text-slate-700 bg-white border-2 border-slate-200 rounded-xl shadow-sm hover:border-emerald-400 hover:bg-emerald-50/50 transition flex justify-between items-center";
+                btn.innerHTML = `<span>${item.desc}</span> <i class="fa-regular fa-circle text-slate-300"></i>`;
+                descListContainer.appendChild(btn);
+            });
+        }
+
+        function selectFunc(id) {
+            matchingPairs.forEach(item => {
+                const btn = document.getElementById(`func-btn-${item.id}`);
+                if (btn && !btn.disabled) {
+                    btn.classList.remove('border-amber-500', 'bg-amber-50', 'ring-2', 'ring-amber-300');
+                }
+            });
+
+            selectedFuncId = id;
+            const currentBtn = document.getElementById(`func-btn-${id}`);
+            currentBtn.classList.add('border-amber-500', 'bg-amber-50', 'ring-2', 'ring-amber-300');
+        }
+
+        function selectDesc(descId) {
+            if (!selectedFuncId) {
+                const resDiv = document.getElementById('matching-result');
+                resDiv.classList.remove('hidden');
+                resDiv.className = "mt-6 p-3 rounded-xl text-center font-medium bg-amber-100 text-amber-800 text-sm";
+                resDiv.innerText = "⚠️ Алдымен сол жақтан функцияны таңдаңыз!";
+                return;
+            }
+
+            const funcBtn = document.getElementById(`func-btn-${selectedFuncId}`);
+            const descBtn = document.getElementById(`desc-btn-${descId}`);
+
+            if (selectedFuncId === descId) {
+                // Correct match!
+                funcBtn.className = "w-full p-4 text-left font-mono text-lg font-bold text-emerald-800 bg-emerald-100 border-2 border-emerald-500 rounded-xl shadow-sm flex justify-between items-center cursor-default";
+                funcBtn.innerHTML = `<span>${funcBtn.querySelector('span').innerText}</span> <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i>`;
+                funcBtn.disabled = true;
+
+                descBtn.className = "w-full p-4 text-left text-sm font-medium text-emerald-800 bg-emerald-100 border-2 border-emerald-500 rounded-xl shadow-sm flex justify-between items-center cursor-default";
+                descBtn.innerHTML = `<span>${descBtn.querySelector('span').innerText}</span> <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i>`;
+                descBtn.disabled = true;
+
+                selectedFuncId = null;
+                matchedPairsCount++;
+
+                const resDiv = document.getElementById('matching-result');
+                resDiv.classList.add('hidden');
+
+                if (matchedPairsCount === matchingPairs.length) {
+                    resDiv.classList.remove('hidden');
+                    resDiv.className = "mt-6 p-4 rounded-xl text-center font-bold text-lg bg-emerald-500 text-white shadow-lg animate-bounce";
+                    resDiv.innerHTML = "🎉 Тамаша! Барлық функциялар мен сипаттамалар дұрыс сәйкестендірілді!";
+                }
+            } else {
+                descBtn.classList.add('border-red-500', 'bg-red-50', 'animate-shake');
+                setTimeout(() => {
+                    descBtn.classList.remove('border-red-500', 'bg-red-50', 'animate-shake');
+                }, 500);
+
+                const resDiv = document.getElementById('matching-result');
+                resDiv.classList.remove('hidden');
+                resDiv.className = "mt-6 p-3 rounded-xl text-center font-medium bg-red-100 text-red-700 text-sm";
+                resDiv.innerText = "❌ Сәйкес келмейді. Басқа нұсқасын таңдап көріңіз!";
+            }
+        }
+
+        // --- TASK 3: QUIZ LOGIC ---
+        function checkQuiz() {
+            const answers = { q1: 'B', q2: 'B', q3: 'B', q4: 'C' };
+            let score = 0;
+            const total = 4;
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+
+            const quizRes = document.getElementById('quiz-result');
+            quizRes.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-amber-100', 'text-amber-900');
+
+            if (score === total) {
+                quizRes.classList.add('bg-emerald-100', 'text-emerald-900');
+                quizRes.innerHTML = `
+                    <h3 class="text-2xl font-bold mb-2">🎉 Керемет нәтиже!</h3>
+                    <p class="text-lg">Сіз барлық <b>${score}/${total}</b> сұраққа дұрыс жауап бердіңіз. Excel функцияларын өте жақсы меңгергенсіз!</p>
+                `;
+            } else {
+                quizRes.classList.add('bg-amber-100', 'text-amber-900');
+                quizRes.innerHTML = `
+                    <h3 class="text-xl font-bold mb-2">Нәтиже: ${score} / ${total}</h3>
+                    <p>Қателескен сұрақтарыңыз бар. Ережені қайталап, қайтадан байқап көріңіз!</p>
+                `;
+            }
+        }
+
+        // Page load initialization
+        window.onload = function() {
+            initMatching();
+        };
+    </script>
+</body>
+</html>
