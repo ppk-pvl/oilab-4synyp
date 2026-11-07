@@ -1,540 +1,1057 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="kk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel-дегі математикалық функциялар - Интерактивті тапсырмалар</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
-        }
-        .animate-shake {
-            animation: shake 0.4s ease-in-out;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11264a">
+  <meta name="description" content="ОйLAB — 4-сынып оқушыларына арналған жасанды интеллект жауаптарын тексеру және сыни ойлау зертханасы.">
+  <title>ОйLAB — ЖИ жауабын тексеру зертханасы</title>
+  <style>
+    :root{--ink:#122542;--muted:#6b7b91;--navy:#122645;--navy2:#0b1b32;--blue:#3477f4;--teal:#0aab9f;--orange:#ffad5e;--red:#e96266;--paper:#f3f6fb;--line:#e6eaf2;--white:#fff;--shadow:0 10px 35px rgba(21,44,90,.064);--radius:20px}
+    *,*:before,*:after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif;line-height:1.55;font-size:15px}
+    button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}
+    button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #74b1ff;outline-offset:3px}
+    .app{display:flex;min-height:100vh}.sidebar{background:linear-gradient(165deg,#152b50,#0d203c 75%);color:#fff;width:254px;position:sticky;top:0;align-self:flex-start;height:100vh;flex-shrink:0;padding:26px 16px 20px;display:flex;flex-direction:column;gap:28px;z-index:5}
+    .brand{display:flex;align-items:center;gap:10px;padding:0 11px}.brand-icon{height:42px;width:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#70e4dd,#3c91f4);font-size:25px;box-shadow:0 9px 20px #071a3740}.brand-title{font-weight:900;font-size:22px;letter-spacing:-.9px;line-height:1.1}.brand-sub{font-size:11px;color:#b4c8e4;letter-spacing:.75px;font-weight:750}
+    .nav-group{display:grid;gap:7px}.nav-label{color:#9cb0cb;font-size:10px;letter-spacing:1.5px;padding:0 17px 7px;font-weight:800;text-transform:uppercase}.nav-item{width:100%;display:flex;align-items:center;text-align:left;gap:11px;padding:12px 14px;background:none;color:#b4c7e3;border:1px solid transparent;border-radius:13px;font-weight:700;font-size:13px;transition:.2s}.nav-item:hover{color:#fff;background:#ffffff12}.nav-item.active{background:#ffffff1e;color:#fff;border-color:#ffffff18}.nav-item .icon-svg{opacity:.9}.nav-item.active .icon-svg{color:#77e2e2}
+    .side-bottom{margin-top:auto;display:grid;gap:13px;padding:0 5px}.side-progress{background:linear-gradient(140deg,#ffffff19,#ffffff0c);border:1px solid #ffffff26;padding:17px;border-radius:17px}.side-progress strong{display:block;font-size:20px;letter-spacing:-1px}.side-progress small{font-size:11px;color:#bacbe4}.track{height:8px;background:#dfe6f1;border-radius:20px;overflow:hidden}.track>span{display:block;height:100%;width:0%;background:linear-gradient(90deg,#18baa9,#60ded7);border-radius:inherit;transition:width .3s}.side-progress .track{background:#ffffff30;margin-top:11px}.side-note{font-size:11px;color:#aabfd9;padding:0 10px;line-height:1.7}
+    .main-shell{flex:1;min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;gap:16px;max-width:1450px;margin:auto}.crumb{color:#7d8a9e;font-size:12px;font-weight:750}.top-actions{display:flex;gap:10px;align-items:center}.top-pill{border:1px solid #dbe7ea;background:#effaf8;border-radius:50px;padding:8px 12px;color:#177b76;font-size:11px;display:inline-flex;gap:7px;align-items:center;font-weight:800}.avatar{width:36px;height:36px;background:#dbe8ff;border-radius:12px;display:grid;place-items:center;font-weight:900;color:#3164c2}.main{max-width:1450px;padding:0 40px 50px;margin:auto;min-height:calc(100vh - 140px)}
+    .page-kicker{font-size:11px;font-weight:900;letter-spacing:1.65px;color:#4779ce;text-transform:uppercase;display:flex;align-items:center;gap:9px}.page-title{margin:7px 0 6px;font-size:clamp(25px,3vw,35px);letter-spacing:-1.2px;line-height:1.2}.page-sub{color:var(--muted);max-width:720px;margin:0 0 28px}
+    .hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);min-height:282px;background:radial-gradient(circle at 78% 28%,#274b8b,transparent 50%),linear-gradient(125deg,#152a51,#102645 80%);overflow:hidden;border-radius:26px;padding:37px 40px;position:relative;color:#fff;box-shadow:0 18px 32px #152c5230}.hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#ffffff18 1px,transparent 1px);background-size:20px 20px;mask-image:linear-gradient(90deg,transparent 45%,#000 98%)}.hero-copy{z-index:1;position:relative}.hero-kicker{display:inline-flex;align-items:center;gap:7px;color:#8ce3d9;font-size:11px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;margin-bottom:15px}.hero h1{font-size:clamp(25px,3.1vw,42px);letter-spacing:-1.55px;line-height:1.17;margin:0 0 12px;max-width:550px}.hero p{max-width:470px;color:#bed0e8;font-size:13px;margin:0 0 21px}.hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:11px;font-weight:850;padding:12px 19px;font-size:13px;min-height:42px;transition:transform .18s,background .18s,box-shadow .18s;text-decoration:none}.btn:hover:not(:disabled){transform:translateY(-1px)}.btn-primary{background:#3379f9;color:#fff;box-shadow:0 7px 15px #2369d72b}.btn-primary:hover{background:#2568e9}.btn-light{background:#fff;color:#204e8e}.btn-outline-white{background:#ffffff13;color:#fff;border:1px solid #ffffff2d}.btn-outline{background:#fff;border:1px solid #dce4f0;color:#24416c}.btn-soft{background:#edf4ff;color:#3970cc}.btn-teal{background:#10a994;color:#fff}.btn-danger{background:#fff0f0;color:#bb4a58}.btn-sm{padding:8px 12px;min-height:36px;font-size:12px}.btn-full{width:100%}
+    .hero-art{z-index:1;position:relative;min-height:215px;display:grid;place-items:center}.orb{height:195px;width:195px;background:linear-gradient(150deg,#235c9d90,#1d386c60);border:1px solid #84c9ff52;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 26px #ffffff06,0 0 0 52px #ffffff05;position:relative}.orb:before,.orb:after{content:"";position:absolute;background:#9fe7f5;border-radius:50%}.orb:before{height:7px;width:7px;left:-19px;top:45px}.orb:after{height:5px;width:5px;right:-35px;bottom:35px}.ai-face{height:121px;width:128px;background:linear-gradient(135deg,#dafffa,#8ad7ee);border-radius:24px;box-shadow:0 17px 27px #03182f78, inset 0 -6px 0 #83baca;display:grid;place-items:center;position:relative;transform:rotate(-6deg)}.ai-face:before{content:"";position:absolute;top:-18px;height:18px;width:3px;background:#98e7ed}.ai-face:after{content:"";position:absolute;top:-25px;height:11px;width:11px;border-radius:50%;background:#e4fbff}.ai-face span{font-weight:1000;font-size:44px;color:#246c97;letter-spacing:-3px}.float-chip{position:absolute;background:#fff;color:#274669;box-shadow:0 12px 25px #03152961;padding:9px 13px;border-radius:12px;display:flex;align-items:center;gap:7px;font-size:12px;font-weight:900}.float-chip.one{left:4%;top:12%;transform:rotate(-9deg)}.float-chip.two{right:2%;bottom:4%;transform:rotate(7deg)}.float-chip.three{right:2%;top:17%;color:#128d80}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:21px 0 29px}.stat{background:#fff;border:1px solid var(--line);border-radius:17px;padding:20px 22px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow)}.stat-icon{height:44px;width:44px;border-radius:13px;background:#eaf3ff;display:grid;place-items:center;color:#3378f0}.stat-icon.green{background:#e7f9f3;color:#169e85}.stat-icon.gold{background:#fff5e7;color:#cd8b3e}.stat-label{font-size:11px;color:#8190a6;font-weight:700}.stat-value{font-size:24px;line-height:1.15;font-weight:950;letter-spacing:-1px}.stat-value span{font-size:12px;color:#7e8fa4;font-weight:700}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:13px;margin:0 0 15px}.section-head h2{margin:0;font-size:22px;letter-spacing:-.65px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:12px}.link-btn{background:none;border:0;color:#3277ed;font-size:12px;font-weight:900;padding:9px 2px;white-space:nowrap}
+    .mission-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.mission-card{background:#fff;border:1px solid var(--line);border-radius:19px;padding:21px;display:flex;flex-direction:column;box-shadow:var(--shadow);position:relative;transition:transform .2s,box-shadow .2s}.mission-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px #102e5a14}.mission-top{display:flex;align-items:start;justify-content:space-between}.mission-emoji{height:52px;width:52px;display:grid;place-items:center;background:#e9f3fe;border-radius:16px;font-size:27px}.mission-emoji.aqua{background:#e9faf6}.mission-emoji.orange{background:#fff4e6}.mission-emoji.purple{background:#f2eeff}.mission-emoji.pink{background:#fff0f3}.mission-emoji.blue{background:#eaf3ff}.mission-emoji.yellow{background:#fff9e5}.mini-tag{font-size:10px;letter-spacing:.2px;color:#687fa3;background:#f2f6fb;padding:5px 9px;border-radius:30px;font-weight:800;white-space:nowrap}.mini-tag.done{color:#0b9a7b;background:#e5f8f1}.mission-number{color:#92a0b4;font-size:10px;font-weight:900;letter-spacing:1px;margin-top:19px}.mission-card h3{margin:3px 0 7px;font-size:17px;line-height:1.3;letter-spacing:-.35px}.mission-desc{color:#79879d;font-size:12px;margin:0 0 17px;min-height:54px}.mission-card .card-footer{margin-top:auto;border-top:1px solid #f0f2f6;padding-top:13px;display:flex;align-items:center;justify-content:space-between;gap:8px}.card-subject{color:#8d9aad;font-size:11px;font-weight:800}.card-open{display:grid;place-items:center;border-radius:10px;width:34px;height:34px;background:#eff5ff;color:#3975e2;border:0;flex-shrink:0}.card-open:hover{background:#dceafe}.small-progress{font-size:11px;font-weight:850;color:#168f77}
+    .framework{margin-top:25px;background:#fff;border-radius:20px;border:1px solid var(--line);padding:23px 25px;box-shadow:var(--shadow)}.framework h3{margin:0 0 16px;font-size:17px}.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.step{display:flex;gap:8px;align-items:center;position:relative;font-size:12px;font-weight:800}.step-number{height:28px;min-width:28px;border-radius:50%;background:#eaf3ff;color:#2873eb;display:grid;place-items:center;font-weight:1000}.step:after{content:"→";color:#adb7c5;font-size:19px;position:absolute;right:3px}.step:last-child:after{display:none}.step:nth-child(3) .step-number{background:#e0f8f1;color:#119c82}
+    .panel{background:#fff;border:1px solid var(--line);border-radius:21px;box-shadow:var(--shadow);padding:26px}.two-col{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.8fr);gap:19px}.muted{color:var(--muted)}.eyebrow{font-size:11px;letter-spacing:1.3px;color:#3a78d9;font-weight:900;text-transform:uppercase}.separator{border:none;border-top:1px solid #eaf0f7;margin:22px 0}.source-box{background:#edf8f7;border:1px solid #d0efea;border-radius:14px;padding:17px;color:#255854;font-size:13px}.source-box b{display:block;color:#137e77;margin-bottom:6px}.warning-box{background:#fffaee;border:1px solid #f6e6c5;border-radius:14px;padding:13px 16px;color:#7b5e27;font-size:12px}.tip-box{background:#eef4ff;border:1px solid #dfeaff;border-radius:13px;padding:14px 16px;color:#3b5f9e;font-size:12px}
+    .lesson-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(250px,.72fr);gap:20px;align-items:start}.lesson-body{min-width:0}.lesson-sidebar{display:grid;gap:14px}.lesson-header{display:flex;align-items:center;gap:12px;margin-bottom:18px}.back-btn{border:1px solid #dce3ef;background:#fff;border-radius:11px;height:39px;width:39px;display:grid;place-items:center;color:#446084}.lesson-header h1{margin:1px 0 0;font-size:23px;letter-spacing:-.75px}.lesson-steps{display:flex;gap:5px;margin-bottom:18px}.lesson-segment{height:6px;flex:1;border-radius:20px;background:#dfe7f2}.lesson-segment.passed{background:#14a693}.lesson-segment.current{background:#4b84ed}.lesson-stage{margin:14px 0 8px;font-size:21px;letter-spacing:-.5px}.lesson-intro{font-size:12px;color:#7889a0;margin:0 0 22px}.ai-message{border:1px solid #dfe8f5;background:linear-gradient(135deg,#f5f9ff,#fff);padding:20px;border-radius:17px;margin:19px 0;position:relative}.ai-title{display:flex;align-items:center;gap:10px;font-weight:900;font-size:12px;color:#59769d;margin-bottom:11px}.ai-circle{height:33px;width:33px;border-radius:10px;background:#e4edff;display:grid;place-items:center;font-size:17px}.ai-text{font-size:16px;font-weight:800;line-height:1.55;color:#264267;margin:0}.ai-corner{position:absolute;top:17px;right:17px;font-size:10px;color:#8494aa;background:#edf2fb;padding:4px 8px;border-radius:10px}.task-q{font-size:17px;font-weight:900;margin:18px 0 14px;letter-spacing:-.25px}.options{display:grid;gap:10px}.option{display:flex;align-items:center;text-align:left;gap:13px;width:100%;min-height:56px;border:1.5px solid #e1e8f1;background:#fff;border-radius:13px;padding:13px 14px;font-weight:700;color:#334d6f;transition:.2s}.option:hover:not(:disabled){border-color:#92b8ff;background:#f8fbff}.option .circle{height:22px;width:22px;display:grid;place-items:center;border:2px solid #c9d6e8;border-radius:50%;flex-shrink:0;font-size:11px}.option.selected{border-color:#377ef3;background:#f1f6ff}.option.selected .circle{border-color:#397af1;background:#397af1;color:#fff}.option.good{border-color:#10a78e;background:#eefaf5}.option.bad{border-color:#e96a68;background:#fff2f1}.feedback{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;font-size:12px;margin-top:14px}.feedback.success{background:#e6f7f0;color:#156b55}.feedback.error{background:#fff0ef;color:#914d4a}.feedback strong{font-size:13px}.footer-actions{margin-top:23px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.progress-note{font-size:12px;font-weight:850;color:#4b83de}.guide-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.guide-card h3{margin:0 0 11px;font-size:14px}.guide-list{list-style:none;margin:0;padding:0;display:grid;gap:11px}.guide-list li{display:flex;align-items:center;gap:9px;color:#8392a8;font-size:12px;font-weight:750}.guide-list li.active{color:#2665c9}.guide-list li.complete{color:#0c9d8b}.small-dot{width:23px;height:23px;border-radius:50%;background:#edf2f9;display:grid;place-items:center;flex-shrink:0;font-size:11px;font-weight:900}.active .small-dot{background:#e6efff;color:#3173e0}.complete .small-dot{background:#d9f7ef;color:#109c83}.score-big{font-size:33px;font-weight:950;letter-spacing:-1px}.result-icon{font-size:42px}.result-card{text-align:center;padding:32px 20px}.result-card h2{font-size:26px;letter-spacing:-.8px;margin:10px 0 8px}.result-card p{max-width:430px;margin:0 auto 19px;color:#728199}.result-stars{color:#ffa33c;letter-spacing:4px;font-size:23px}.result-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-top:23px}
+    .textarea,.text-input,.select{width:100%;border:1px solid #d9e2ef;border-radius:11px;background:#fff;color:#243c61;padding:11px 13px;font-size:13px;outline:0}.textarea:focus,.text-input:focus,.select:focus{border-color:#4082ee;box-shadow:0 0 0 3px #4282ed14}.textarea{min-height:94px;resize:vertical}.field{display:grid;gap:5px;margin:0 0 12px}.field label{font-size:12px;font-weight:850;color:#395270}.field small{color:#8898aa;font-size:11px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 15px}.span-2{grid-column:span 2}.teacher-hero{display:flex;justify-content:space-between;align-items:center;gap:20px;background:linear-gradient(115deg,#e9f4ff,#f3fdfb);border:1px solid #d9eaf4;border-radius:19px;padding:23px 25px;margin-bottom:21px}.teacher-hero h2{margin:0 0 5px;font-size:20px}.teacher-hero p{max-width:650px;margin:0;color:#718199;font-size:12px}.teacher-hero-icon{font-size:53px}.teacher-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px}.rubric{width:100%;border-collapse:collapse;font-size:12px}.rubric th{text-align:left;background:#f4f8ff;color:#46627f;font-size:11px}.rubric td,.rubric th{border-bottom:1px solid #e9eef6;padding:12px 9px}.rubric tr:last-child td{border-bottom:0}.table-wrap{overflow-x:auto}.bar-row{display:grid;grid-template-columns:minmax(100px,1fr) 1.5fr 55px;gap:10px;align-items:center;font-size:11px;margin:12px 0}.bar-outer{height:10px;background:#edf2f7;border-radius:20px;overflow:hidden}.bar-inner{height:100%;border-radius:20px;background:linear-gradient(90deg,#3885f0,#20b6ae)}.empty{padding:25px;background:#f7f9fc;border:1px dashed #d7e2ed;border-radius:15px;text-align:center;color:#8494a9;font-size:12px}.pill{border-radius:50px;padding:5px 9px;background:#eaf7f5;color:#118d7e;font-weight:850;font-size:10px}.lesson-plan{display:grid;gap:10px}.plan-row{display:flex;gap:12px;align-items:start;border:1px solid #e9edf3;border-radius:13px;padding:14px}.plan-num{display:grid;place-items:center;background:#eaf2ff;color:#3678ec;border-radius:11px;min-width:36px;height:36px;font-weight:900}.plan-row strong{display:block;font-size:13px}.plan-row p{margin:2px 0 0;font-size:12px;color:#7b899d}.plan-row small{display:block;color:#3d77d9;font-weight:800;font-size:10px}
+    .method-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px}.method-card{background:#fff;border:1px solid #e7ecf4;border-radius:16px;padding:19px 16px}.method-card .method-icon{font-size:28px;display:block;margin-bottom:10px}.method-card strong{font-size:16px;display:block}.method-card p{color:#7a899f;font-size:12px;line-height:1.6}.method-num{color:#3079e7;font-weight:900;font-size:11px}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:12px}.compare-box{padding:18px;border-radius:15px;background:#fff5f2;border:1px solid #ffdbd3}.compare-box.correct{background:#eafaf4;border-color:#cbeee0}.compare-box strong{color:#b04f41;font-size:12px}.compare-box.correct strong{color:#138c71}.compare-box p{font-size:14px;font-weight:800;margin:7px 0 0}.text-block{font-size:13px;color:#556a83;line-height:1.85}.text-block strong{color:#263f64}.callout{display:flex;align-items:start;gap:12px;background:#fff;border:1px solid var(--line);padding:19px 22px;border-radius:18px;margin-top:18px}.callout p{margin:0;font-size:12px;color:#637993}.section-margin{margin-top:30px}.footer{text-align:center;font-size:11px;color:#91a0b4;padding:18px 20px 25px}.reveal{padding:18px;border-radius:15px;background:#effaf7;border:1px solid #cfeae3;margin-top:15px}.reveal strong{color:#148677}.answer-grid{display:grid;gap:13px}.answer-grid .field{margin:0}.selfcheck{display:flex;gap:9px;align-items:start;margin-top:14px;color:#536984;font-size:12px}.selfcheck input{margin-top:3px;accent-color:#198d85}.printonly{display:none}.toast{position:fixed;z-index:30;bottom:25px;right:25px;max-width:min(360px,calc(100vw - 50px));background:#142a49;color:#fff;border:1px solid #ffffff2a;padding:13px 18px;border-radius:14px;box-shadow:0 11px 30px #1125444f;font-size:12px;font-weight:750;opacity:0;transform:translateY(20px);pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translateY(0)}
+    @media(max-width:1150px){.mission-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.method-cards{grid-template-columns:repeat(3,1fr)}.hero{padding:28px}.main{padding:0 27px 35px}.topbar{padding:20px 27px}.sidebar{width:220px}}
+    @media(max-width:860px){.sidebar{position:relative;top:unset;height:auto;width:auto;align-self:unset;padding:14px;gap:12px}.app{display:block}.side-bottom{display:none}.brand{display:none}.nav-group{display:flex;overflow-x:auto;gap:5px}.nav-label{display:none}.nav-item{width:auto;white-space:nowrap;flex-shrink:0;padding:10px 12px;font-size:12px}.topbar{padding:18px 20px}.main{padding:0 20px 35px}.hero{grid-template-columns:1fr .6fr}.lesson-layout,.two-col{grid-template-columns:1fr}.lesson-sidebar{grid-template-columns:1fr 1fr}.method-cards{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:620px){.hero{grid-template-columns:1fr;padding:27px 24px;min-height:auto}.hero-art{display:none}.hero h1{font-size:30px}.top-pill{display:none}.topbar{padding:15px 16px}.main{padding:0 15px 30px}.stats{grid-template-columns:1fr 1fr;gap:10px;margin:15px 0 24px}.stat{padding:12px;gap:9px}.stat:last-child{grid-column:span 2}.stat-icon{width:36px;height:36px;flex-shrink:0}.stat-value{font-size:22px}.stat-value span{font-size:10px}.mission-grid,.teacher-grid,.comparison{grid-template-columns:1fr}.method-cards{grid-template-columns:1fr 1fr}.mission-desc{min-height:auto}.steps{grid-template-columns:1fr;gap:9px}.step:after{display:none}.framework{padding:18px}.panel{padding:18px}.lesson-sidebar{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.span-2{grid-column:span 1}.teacher-hero-icon{display:none}.teacher-hero{padding:18px}.page-title{font-size:26px}.section-head h2{font-size:19px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+    @media print{body{background:white!important;color:#111;font-size:12pt}.sidebar,.topbar,.footer,.no-print,.toast,.hero-art{display:none!important}.main{margin:0;padding:0;max-width:none}.app,.main-shell{display:block}.panel,.mission-card{box-shadow:none;border-color:#bbb}.printonly{display:block}a{text-decoration:none;color:#111}.method-cards{grid-template-columns:repeat(2,1fr)}.page-title{font-size:22pt}.print-worksheet{display:block!important}.print-worksheet .worksheet-lines{height:48px;border-bottom:1px dashed #777}.teacher-grid{grid-template-columns:1fr}button{display:none!important}}
+  </style>
 </head>
-<body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col">
+<body>
+<div class="app">
+  <aside class="sidebar" aria-label="Негізгі мәзір">
+    <div class="brand"><div class="brand-icon" aria-hidden="true">✦</div><div><div class="brand-title">Ой<span style="color:#7ee3df">LAB</span></div><div class="brand-sub">AI FACTCHECK LAB</div></div></div>
+    <nav class="nav-group" id="navigation"></nav>
+    <div class="side-bottom"><div class="side-progress"><small>Менің жетістігім</small><strong id="side-score">0 / 24 миссия</strong><div class="track"><span id="side-fill"></span></div></div><div class="side-note">✦ Сұрақ қой. Дәлел ізде. Өз ойыңды қорға.</div></div>
+  </aside>
+  <div class="main-shell">
+    <header class="topbar"><div class="crumb" id="breadcrumb">ОйLAB / Басты бет</div><div class="top-actions"><div class="top-pill"><span aria-hidden="true">●</span> Интернетсіз жұмыс істейді</div><div class="avatar" title="4-сынып">4</div></div></header>
+    <main class="main" id="content" tabindex="-1"></main>
+    <footer class="footer no-print">ОйLAB · 4-сыныптың сыни ойлау зертханасы · Оқу жобасы · © 2026</footer>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+// Барлық тапсырмалар алдын ала педагогикалық мақсатта дайындалған.
+// Сайт ЖИ API-іне қосылмайды, баланың жеке деректерін серверге жібермейді.
+const storageKey='oylab_progress_v1';
+const customKey='oylab_custom_v1';
+const E=(x)=>String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const icons={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-8h6v8"/>',grid:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',steps:'<path d="M4 7h11M4 12h7M4 17h11"/><path d="m17 16 2 2 3-4"/>',teacher:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4M7 9h4m-4 4h7"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/>',arrow:'<path d="M5 12h14m-6-6 6 6-6 6"/>',back:'<path d="M19 12H5m6 6-6-6 6-6"/>',check:'<path d="m4 12 5 5L20 6"/>',chart:'<path d="M4 20V12m6 8V5m6 15v-9m5 9H2"/>',star:'<path d="m12 2 3 6.4 7 1-5.1 4.9 1.2 7L12 18l-6.1 3.3 1.2-7L2 9.4l7-1z"/>',print:'<path d="M6 9V3h12v6m-12 9H4V9h16v9h-2m-12-4h12v7H6z"/>',download:'<path d="M12 3v12m-5-5 5 5 5-5M4 18v3h16v-3"/>',trash:'<path d="M4 7h16m-10 4v7m4-7v7M7 7l1 14h8l1-14m-9 0V4h8v3"/>',spark:'<path d="m12 3 1.8 6.2L20 11l-6.2 1.8L12 19l-1.8-6.2L4 11l6.2-1.8z"/>',shield:'<path d="M12 2 20 5v6c0 5-3 8-8 11-5-3-8-6-8-11V5z"/><path d="m8 12 3 3 5-6"/>',edit:'<path d="M12 20h9M4 17l-1 4 4-1L19 8l-4-4z"/>',book:'<path d="M3 4h8a4 4 0 0 1 4 4v13a4 4 0 0 0-4-4H3zM15 8a4 4 0 0 1 4-4h2v13h-2a4 4 0 0 0-4 4z"/>'};
+const ico=(name,size=18)=>`<svg class="icon-svg" aria-hidden="true" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${icons[name]||icons.star}</svg>`;
+const makeTask=(id,subject,emoji,color,title,desc,prompt,ai,source,checks,tip,model)=>({id,subject,emoji,color,title,desc,prompt,ai,source,checks,tip,model,type:'quiz'});
+const tasks=[
+ makeTask('math','Математика','➕','blue','Қай қосынды дұрыс?','ЖИ орындаған қосу амалын қайта есептеп тексер.','45 пен 17 сандарының қосындысы неше?','45 + 17 = 52. Демек, жауап — 52.','Есептеу үлгісі: 45 + 10 = 55; 55 + 7 = 62.',[
+ {q:'ЖИ жауабына қандай баға бересің?',opts:['Дұрыс жауап','Қате жауап','Бұл тек жеке пікір'],correct:1,why:'45 + 17 санын қайта есептегенде 62 шығады.'},
+ {q:'Жауаптағы қате тұжырымды белгіле.',opts:['45 + 17 = 52','Екі санды қосу керек','Сұрақта 45 пен 17 берілген'],correct:0,why:'«45 + 17 = 52» теңдігі қате жазылған.'},
+ {q:'Қай дәлел сенімді?',opts:['52 саны әдемі естіледі','45 + 10 = 55; 55 + 7 = 62','ЖИ әрқашан дұрыс айтады'],correct:1,why:'Қадамдап есептеу — нәтижені тексеретін дәлел.'},
+ {q:'ЖИ жауабын дұрыс түзет.',opts:['45 + 17 = 61','45 + 17 = 62','45 + 17 = 52'],correct:1,why:'Дұрыс жауап: 62.'}
+ ],'Жауапты тексеру үшін қосу амалын қайта орында.','45 + 17 = 62. Себебі 45 + 10 = 55, оған 7 қоссақ, 62 болады.'),
+ makeTask('fish','Жаратылыстану','🐟','aqua','Балықтардың мекені','«Барлық» деген сөз әрдайым дұрыс па?','Балықтар қандай суда тіршілік етеді?','Барлық балықтар тек тұщы суда тіршілік етеді.','Анықтамалық дерек: балықтар тұщы суда да, тұзды теңіз-мұхит суларында да тіршілік етеді.',[
+ {q:'ЖИ жауабы қандай?',opts:['Толық дұрыс','Қате жалпылау бар','Бұл тек жеке пікір'],correct:1,why:'Теңіздер мен мұхиттарда да көптеген балық түрлері өмір сүреді.'},
+ {q:'Қай сөз тіркесі күмән тудырады?',opts:['«Балықтар»','«тіршілік етеді»','«тек тұщы суда»'],correct:2,why:'«Тек тұщы суда» тіркесі тұзды судағы балықтарды ескермейді.'},
+ {q:'Қай ақпарат қателікті дәлелдейді?',opts:['Теңіз балықтары тұзды суда тіршілік етеді','Балықтар міндетті түрде ұшады','Барлық су әрдайым тәтті'],correct:0,why:'Тұзды судағы балықтар — қарсы мысал.'},
+ {q:'Қай тұжырым дұрыс?',opts:['Балықтар тек өзенде болады','Балықтар тұщы және тұзды суда тіршілік ете алады','Барлық балық құрлықта жүреді'],correct:1,why:'Балықтардың мекен ету ортасы әртүрлі.'}
+ ],'«Барлығы», «ешқашан», «тек» сөздерін кездестірсең, қарсы мысал ізде.','Балықтар тұщы суда да, тұзды теңіз және мұхит суларында да тіршілік ете алады.'),
+ makeTask('capital','Дүниетану','🗺️','purple','Картамен тексер','Қазақстан туралы деректі картадан тексер.','Қазақстанның астанасы қай қала?','Қазақстанның астанасы — Алматы.','Қазақстан картасы және еліміз туралы анықтамалық: Қазақстан Республикасының астанасы — Астана.',[
+ {q:'ЖИ жауабы дұрыс па?',opts:['Дұрыс','Қате','Жеке пікір'],correct:1,why:'Қазақстанның қазіргі астанасы — Астана қаласы.'},
+ {q:'Қай сөйлем қате?',opts:['«Қазақстанның астанасы — Алматы»','«Қазақстан — мемлекет»','«Астана — қала»'],correct:0,why:'Алматы — Қазақстанның астанасы емес.'},
+ {q:'Қай дереккөзбен тексересің?',opts:['Кездейсоқ пікірге қарап','Қазақстан картасы мен ресми анықтамалыққа қарап','Сөйлем ұзындығына қарап'],correct:1,why:'Карта мен анықтамалық географиялық деректі нақтылауға көмектеседі.'},
+ {q:'Қайсысы дұрыс түзетілген жауап?',opts:['Қазақстанның астанасы — Астана','Қазақстанның астанасы — Шымкент','Қазақстанның астанасы — Алматы'],correct:0,why:'Дұрыс жауап: Астана.'}
+ ],'Географиялық ақпаратты карта немесе анықтамалық арқылы тексер.','Қазақстан Республикасының астанасы — Астана қаласы.'),
+ makeTask('autumn','Қазақ тілі','🍁','orange','Пікір ме, дерек пе?','Пікірді барлық адамға ортақ факт деп қабылдама.','Жыл мезгілдері туралы пікірді қалай түсінеміз?','Күз — ең әдемі мезгіл, сондықтан бәріне күз ұнайды.','Түсіндірме: «ең әдемі» — жеке талғамға қатысты пікір. Әр адамға әртүрлі жыл мезгілі ұнауы мүмкін.',[
+ {q:'Берілген жауаптың қандай мәселесі бар?',opts:['Бұл математикалық қате','Жеке пікір баршаға ортақ факт ретінде айтылған','Барлығы ғылыми дерек'],correct:1,why:'«Ең әдемі» мен «бәріне ұнайды» дегенді дәлелденген факт деп айта алмаймыз.'},
+ {q:'Қай сөздер субъективті жалпылауды білдіреді?',opts:['«күз», «мезгіл»','«ең әдемі», «бәріне»','«сондықтан»'],correct:1,why:'Талғамды білдіретін бағалау мен «бәріне» деген жалпылауды ажырат.'},
+ {q:'Қай дәлел қисынды?',opts:['Әр адамның ұнататын мезгілі әртүрлі болуы мүмкін','Барлық адам бірдей ойлайды','ЖИ біреудің талғамын дәл біледі'],correct:0,why:'Пікірлер әртүрлі болуы мүмкін, сондықтан оны әмбебап факт деу қате.'},
+ {q:'Жауапты қалай дұрыс тұжырымдайсың?',opts:['Міндетті түрде бәріне күз ұнайды','Күзді ұнататын адам жоқ','Менің ойымша, күз әдемі. Басқалар басқа мезгілді ұнатуы мүмкін'],correct:2,why:'«Менің ойымша» деген тіркес пікірді фактімен шатастырмайды.'}
+ ],'«Менің ойымша» деп айтылған пікір мен дәлелденетін деректі ажырат.','Менің ойымша, күз әдемі. Бірақ әркімнің сүйікті мезгілі әртүрлі болуы мүмкін.'),
+ makeTask('september','Математика','📆','pink','Күнтізбе детективі','Айдағы күн санын күнтізбеден анықта.','Қыркүйек айында неше күн бар?','Қыркүйек айында 31 күн бар.','Күнтізбе: қыркүйек — 30 күннен тұратын ай.',[
+ {q:'ЖИ жауабын бағала.',opts:['Дұрыс','Қате','Талғамға байланысты пікір'],correct:1,why:'Қыркүйек 30 күннен тұрады.'},
+ {q:'Қай жерде қате бар?',opts:['«31 күн бар»','«Қыркүйек айында»','«айында»'],correct:0,why:'Қате тұсы — күн саны.'},
+ {q:'Қай тәсілмен тексерген дұрыс?',opts:['Достың кездейсоқ жауабымен','Күнтізбеден санап көрумен','Жауаптың түсімен'],correct:1,why:'Күнтізбе — бұл сұраққа лайық дерек.'},
+ {q:'Дұрыс жауапты таңда.',opts:['Қыркүйекте 28 күн','Қыркүйекте 31 күн','Қыркүйекте 30 күн'],correct:2,why:'Қыркүйекте 30 күн бар.'}
+ ],'Күнтізбені пайдаланып, күндерді өзің санап көр.','Қыркүйек айында 30 күн бар.'),
+ makeTask('water','Жаратылыстану','💧','aqua','Судың үш күйі','Ғылыми мәліметті мысалмен тексер.','Мұз суының қандай күйі?','Судың үш күйі бар. Мұз — газ күйіндегі су.','Жаратылыстану ережесі: су қатты (мұз), сұйық (су) және газ (су буы) күйінде болады.',[
+ {q:'ЖИ жауабы қандай?',opts:['Қате бар','Бәрі дұрыс','Бұл жеке пікір'],correct:0,why:'Мұз — судың газ күйі емес, қатты күйі.'},
+ {q:'Қай сөйлемді түзету керек?',opts:['«Судың үш күйі бар»','«Мұз — газ күйіндегі су»','«Су табиғатта кездеседі»'],correct:1,why:'Мұздың күйі қате көрсетілген.'},
+ {q:'Қай дерек тексеруге көмектеседі?',opts:['Мұз — қатты, су — сұйық, бу — газ','Мұз тек газ болады','Судың бір ғана күйі бар'],correct:0,why:'Үш күйді салыстыру қатені айқындайды.'},
+ {q:'Қайсысы дұрыс түзету?',opts:['Мұз — сұйық су','Мұз — газ күйіндегі су','Мұз — судың қатты күйі'],correct:2,why:'Мұз — судың қатты күйі.'}
+ ],'Заттың күйін таныс мысалдар арқылы түсіндір.','Судың үш күйі бар: мұз — қатты, су — сұйық, су буы — газ күйі.'),
+ makeTask('pencils','Математика','✏️','yellow','Қарындаштарды сана','Көбейту амалын қосумен дәлелде.','Үш қораптың әрқайсысында 6 қарындаш бар. Барлығы нешеу?','3 × 6 = 16. Демек, 16 қарындаш бар.','Қосу арқылы есептеу: 6 + 6 + 6 = 18; 3 × 6 = 18.',[
+ {q:'ЖИ жауабын бағала.',opts:['Дұрыс','Қате','Жеке пікір'],correct:1,why:'Үш қораптағы 6 қарындаштан барлығы 18 болады.'},
+ {q:'Қате тұжырымды белгіле.',opts:['«Үш қорап»','«3 × 6 = 16»','«6 қарындаш»'],correct:1,why:'3 × 6 амалының мәні 16 емес.'},
+ {q:'Қай есеп дұрыс дәлелдейді?',opts:['6 + 6 + 6 = 18','6 + 6 = 12, сондықтан 16','3 + 6 = 18'],correct:0,why:'Үш рет 6 қосамыз: 18.'},
+ {q:'Дұрыс жауап қайсы?',opts:['3 × 6 = 16','3 × 6 = 18','3 × 6 = 12'],correct:1,why:'3 × 6 = 18.'}
+ ],'Көбейтуді қайталанатын қосу арқылы дәлелде.','3 × 6 = 18 қарындаш. Тексеру: 6 + 6 + 6 = 18.'),
+ makeTask('penguin','Жаратылыстану','🐧','blue','Пингвиннің құпиясы','Қарсы мысал арқылы жалпылауды тексер.','Барлық құстар ұша ма?','Барлық құстар ұшады. Пингвин де еркін ұша алады.','Анықтамалық дерек: пингвин — құс, бірақ ол ұша алмайды; жақсы жүзеді.',[
+ {q:'ЖИ жауабында қате бар ма?',opts:['Иә, қате бар','Жоқ, бәрі дұрыс','Бұл жай талғам'],correct:0,why:'Пингвин ұша алмайды, демек «барлық құстар ұшады» деген дұрыс емес.'},
+ {q:'Қай тұжырымды тексеру керек?',opts:['«Пингвин — құс»','«Барлық құстар ұшады»','«Құстардың қауырсыны болады»'],correct:1,why:'«Барлық құстар ұшады» — қате жалпылау.'},
+ {q:'Қай дерек сенімді?',opts:['Пингвин — құс, бірақ ұша алмайды','Барлық құс үнемі ұшады','Пингвин — балық'],correct:0,why:'Пингвин — қарсы мысал.'},
+ {q:'Дұрыс түзетуді таңда.',opts:['Барлық құс суда өмір сүреді','Көптеген құстар ұшады, бірақ пингвин ұшпайды','Пингвин ешқашан жүзбейді'],correct:1,why:'Көптеген құстар ұшады, алайда ұшпайтын құстар да бар.'}
+ ],'«Барлық» деген сөзді бір қарсы мысал арқылы тексеруге болады.','Көптеген құстар ұшады. Бірақ пингвин ұшпайтын құс, ол суда жақсы жүзеді.')
 
-    <!-- Header Navigation -->
-    <header class="bg-emerald-700 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-file-excel text-3xl text-emerald-300"></i>
-                <h1 class="text-xl sm:text-2xl font-bold tracking-tight">Excel Математикалық Функциялары</h1>
-            </div>
-            <!-- Tab Navigation -->
-            <nav class="flex bg-emerald-800/60 p-1 rounded-xl gap-1 text-sm font-medium w-full sm:w-auto justify-center">
-                <button onclick="switchTab('tab1')" id="btn-tab1" class="tab-btn px-4 py-2 rounded-lg transition-all bg-white text-emerald-800 shadow">
-                    <i class="fa-solid fa-trophy mr-1"></i> 1. Баллдық Викторина
-                </button>
-                <button onclick="switchTab('tab2')" id="btn-tab2" class="tab-btn px-4 py-2 rounded-lg transition-all text-emerald-100 hover:text-white hover:bg-emerald-700/50">
-                    <i class="fa-solid fa-puzzle-piece mr-1"></i> 2. Сәйкестендіру
-                </button>
-                <button onclick="switchTab('tab3')" id="btn-tab3" class="tab-btn px-4 py-2 rounded-lg transition-all text-emerald-100 hover:text-white hover:bg-emerald-700/50">
-                    <i class="fa-solid fa-graduation-cap mr-1"></i> 3. Экспресс-Тест
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Main Content Area -->
-    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6">
-
-        <!-- TAB 1: POINT QUIZ (Баллдық Викторина Тапсырмасы) -->
-        <section id="tab1" class="tab-content block space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex items-center justify-between mb-4 border-b pb-3">
-                    <div class="flex items-center gap-3">
-                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">1-Тапсырма</span>
-                        <h2 class="text-xl font-bold text-slate-800">Интерактивті Баллдық Викторина</h2>
-                    </div>
-                    <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-1.5 rounded-xl font-bold">
-                        Жинаған балл: <span id="user-score" class="text-xl text-emerald-600">0</span>
-                    </div>
-                </div>
-                <p class="text-slate-600 mb-6">
-                    Қалаған тақырып бойынша <b>10, 20, 30 баллдық</b> ұяшықтардың бірін таңдаңыз. Сұраққа жауап беріп, «Жауапты көрсету» батырмасын басу арқылы өзіңізді тексеріңіз!
-                </p>
-
-                <!-- Jeopardy Board Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Category 1 -->
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
-                        <h3 class="font-bold text-slate-700 text-lg mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-calculator text-emerald-600"></i> СУММ & ABS
-                        </h3>
-                        <div class="w-full space-y-3">
-                            <button onclick="openQuestion('cat1', 10)" id="btn-cat1-10" class="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">10 Балл</button>
-                            <button onclick="openQuestion('cat1', 20)" id="btn-cat1-20" class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">20 Балл</button>
-                            <button onclick="openQuestion('cat1', 30)" id="btn-cat1-30" class="w-full py-4 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">30 Балл</button>
-                        </div>
-                    </div>
-
-                    <!-- Category 2 -->
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
-                        <h3 class="font-bold text-slate-700 text-lg mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-square-root-variable text-blue-600"></i> КОРЕНЬ & СТЕПЕНЬ
-                        </h3>
-                        <div class="w-full space-y-3">
-                            <button onclick="openQuestion('cat2', 10)" id="btn-cat2-10" class="w-full py-4 bg-blue-500 hover:bg-blue-600 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">10 Балл</button>
-                            <button onclick="openQuestion('cat2', 20)" id="btn-cat2-20" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">20 Балл</button>
-                            <button onclick="openQuestion('cat2', 30)" id="btn-cat2-30" class="w-full py-4 bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">30 Балл</button>
-                        </div>
-                    </div>
-
-                    <!-- Category 3 -->
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
-                        <h3 class="font-bold text-slate-700 text-lg mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-filter text-purple-600"></i> СУММЕСЛИ & Ережелер
-                        </h3>
-                        <div class="w-full space-y-3">
-                            <button onclick="openQuestion('cat3', 10)" id="btn-cat3-10" class="w-full py-4 bg-purple-500 hover:bg-purple-600 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">10 Балл</button>
-                            <button onclick="openQuestion('cat3', 20)" id="btn-cat3-20" class="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">20 Балл</button>
-                            <button onclick="openQuestion('cat3', 30)" id="btn-cat3-30" class="w-full py-4 bg-purple-700 hover:bg-purple-800 text-white font-extrabold text-xl rounded-xl shadow transition transform hover:-translate-y-0.5">30 Балл</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Question Modal -->
-        <div id="question-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-            <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-slate-100 flex flex-col">
-                <!-- Modal Header -->
-                <div class="flex justify-between items-center border-b pb-3 mb-4">
-                    <span id="modal-points" class="bg-emerald-100 text-emerald-800 text-sm font-extrabold px-3 py-1 rounded-full"></span>
-                    <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold focus:outline-none">&times;</button>
-                </div>
-                
-                <!-- Modal Body -->
-                <div class="space-y-4 my-2">
-                    <h3 id="modal-question" class="text-lg font-bold text-slate-800"></h3>
-                    
-                    <!-- Answer box (Hidden initially) -->
-                    <div id="modal-answer-box" class="hidden p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
-                        <span class="text-xs font-bold text-emerald-700 uppercase block mb-1">Дұрыс жауабы:</span>
-                        <p id="modal-answer" class="text-base font-semibold text-emerald-900"></p>
-                    </div>
-                </div>
-
-                <!-- Modal Actions -->
-                <div class="flex flex-wrap gap-2 justify-end border-t pt-4 mt-4">
-                    <button id="btn-show-ans" onclick="toggleAnswer()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-sm transition">
-                        <i class="fa-solid fa-eye mr-1"></i> Жауапты көрсету
-                    </button>
-                    <button id="btn-add-points" onclick="claimPoints()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg text-sm transition hidden">
-                        <i class="fa-solid fa-plus-circle mr-1"></i> Баллды қосу және жабу
-                    </button>
-                    <button onclick="closeModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold rounded-lg text-sm transition">
-                        Жабу
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 2: MATCHING GAME (Сәйкестендіру Тапсырмасы) -->
-        <section id="tab2" class="tab-content hidden space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex items-center justify-between mb-4 border-b pb-3">
-                    <div class="flex items-center gap-3">
-                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase">2-Тапсырма</span>
-                        <h2 class="text-xl font-bold text-slate-800">Интерактивті Жұп Табу (Click to Match)</h2>
-                    </div>
-                    <button onclick="initMatching()" class="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg font-semibold transition">
-                        <i class="fa-solid fa-rotate-right mr-1"></i> Қайта бастау
-                    </button>
-                </div>
-                <p class="text-slate-600 mb-6">
-                    <b>Нұсқаулық:</b> Алдымен сол жақтан <b>функцияны</b> басыңыз, сосын оған сәйкес келетін оң жақтағы <b>сипаттаманы</b> таңдаңыз!
-                </p>
-
-                <!-- Click-to-Match Interactive Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-start">
-                    <!-- Left Column: Functions -->
-                    <div class="space-y-3">
-                        <h3 class="font-bold text-slate-700 text-center mb-2 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-code text-blue-600"></i> Функциялар
-                        </h3>
-                        <div id="matching-functions-list" class="space-y-3">
-                            <!-- JS render -->
-                        </div>
-                    </div>
-
-                    <!-- Right Column: Descriptions -->
-                    <div class="space-y-3">
-                        <h3 class="font-bold text-slate-700 text-center mb-2 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-align-left text-emerald-600"></i> Сипаттамасы мен қызметі
-                        </h3>
-                        <div id="matching-descs-list" class="space-y-3">
-                            <!-- JS render -->
-                        </div>
-                    </div>
-                </div>
-
-                <div id="matching-result" class="mt-8 p-4 rounded-xl text-center font-semibold text-lg hidden"></div>
-            </div>
-        </section>
-
-        <!-- TAB 3: QUIZ (Тест Тапсырмасы) -->
-        <section id="tab3" class="tab-content hidden space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex items-center justify-between mb-4 border-b pb-3">
-                    <div class="flex items-center gap-3">
-                        <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full uppercase">3-Тапсырма</span>
-                        <h2 class="text-xl font-bold text-slate-800">Математикалық Функциялар Тесті</h2>
-                    </div>
-                </div>
-                
-                <form id="quiz-form" class="space-y-6 max-w-4xl mx-auto">
-                    <!-- Q1 -->
-                    <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
-                        <p class="font-semibold text-slate-800">1. Санның модулін (абсолюттік мәнін) қайтаратын функцияны көрсетіңіз:</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q1" value="A" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-mono">=КОРЕНЬ()</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q1" value="B" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-mono">=ABS()</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q1" value="C" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-mono">=СТЕПЕНЬ()</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q1" value="D" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-mono">=СУММ()</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Q2 -->
-                    <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
-                        <p class="font-semibold text-slate-800">2. <code class="bg-slate-200 px-1 py-0.5 rounded text-emerald-700">=КОРЕНЬ(49)</code> формуласының нәтижесі неге тең болады?</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q2" value="A" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2">49</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q2" value="B" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2">7</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q2" value="C" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2">-7</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q2" value="D" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2">2401</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Q3 -->
-                    <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
-                        <p class="font-semibold text-slate-800">3. Берілген шартқа сәйкес келетін сандардың қосындысын есептейтін функция:</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q3" value="A" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-mono">=СУММ()</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q3" value="B" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-mono">=СУММЕСЛИ()</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q3" value="C" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-mono">=ABS()</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q3" value="D" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-mono">=СТЕПЕНЬ()</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Q4 -->
-                    <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
-                        <p class="font-semibold text-slate-800">4. Excel-де формула қандай белгіден басталады?</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q4" value="A" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-bold">+</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q4" value="B" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-bold">:</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q4" value="C" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-bold">=</span>
-                            </label>
-                            <label class="flex items-center p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-100 transition">
-                                <input type="radio" name="q4" value="D" class="w-4 h-4 text-purple-600">
-                                <span class="ml-2 font-bold font-mono">;</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="text-center pt-4">
-                        <button type="button" onclick="checkQuiz()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3 rounded-xl shadow-md transition-all transform active:scale-95">
-                            <i class="fa-solid fa-paper-plane mr-2"></i> Тестті Аяқтау
-                        </button>
-                    </div>
-                </form>
-
-                <div id="quiz-result" class="mt-6 p-6 rounded-xl text-center hidden"></div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-800 text-slate-400 text-center py-4 text-sm mt-auto">
-        <p>© Excel Оқыту Интерактивті Порталы. Информатика сабағына арналған.</p>
-    </footer>
-
-    <!-- JavaScript Logic -->
-    <script>
-        // Tab switching logic
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-white', 'text-emerald-800', 'shadow');
-                btn.classList.add('text-emerald-100', 'hover:text-white', 'hover:bg-emerald-700/50');
-            });
-
-            document.getElementById(tabId).classList.remove('hidden');
-            const activeBtn = document.getElementById('btn-' + tabId);
-            activeBtn.classList.add('bg-white', 'text-emerald-800', 'shadow');
-            activeBtn.classList.remove('text-emerald-100', 'hover:text-white', 'hover:bg-emerald-700/50');
-        }
-
-        // --- TASK 1: JEOPARDY QUIZ LOGIC ---
-        const questionsData = {
-            cat1: {
-                10: { q: "=СУММ(5; 7; 3) өрнегінің нәтижесі неге тең болады?", a: "15 (барлық сандар қосылады)" },
-                20: { q: "=ABS(-24) функциясы қандай мән қайтарады?", a: "24 (санның оң модулін қайтарады)" },
-                30: { q: "СУММ функциясында ұяшықтар диапазонын қалай көрсетеміз?", a: "=СУММ(A2:A4) түрінде қос нүкте арқылы жазамыз." }
-            },
-            cat2: {
-                10: { q: "=КОРЕНЬ(49) өрнегінің мәні неге тең?", a: "7 (49-дың квадрат түбірі 7-ге тең)" },
-                20: { q: "=СТЕПЕНЬ(5; 2) өрнегі не істейді және нәтижесі қанша?", a: "5-ті 2 дәрежесіне көтереді. Нәтижесі: 25" },
-                30: { q: "КОРЕНЬ() функциясының аргументіне теріс сан жазуға бола ма?", a: "Болмайды! Функция аргументі әрқашан теріс емес сан болуы тиіс." }
-            },
-            cat3: {
-                10: { q: "Excel-де кез келген формула қандай белгіден басталуы тиіс?", a: "= (тең) белгісінен басталады" },
-                20: { q: "=СУММЕСЛИ(B2:B6; \">=5\"; C2:C6) формуласында \">=5\" нені білдіреді?", a: "Есептеуге алынатын сандарға қойылған шартты білдіреді." },
-                30: { q: "Excel-де формуланың аргументтері бір-бірінен қандай белгімен бөлінеді?", a: "; (нүктелі үтір) белгісімен бөлінеді" }
-            }
-        };
-
-        let currentPoints = 0;
-        let currentBtnId = null;
-        let totalScore = 0;
-
-        function openQuestion(cat, points) {
-            currentPoints = points;
-            currentBtnId = `btn-${cat}-${points}`;
-
-            const qData = questionsData[cat][points];
-            document.getElementById('modal-points').innerText = `${points} Балл Сұрағы`;
-            document.getElementById('modal-question').innerText = qData.q;
-            document.getElementById('modal-answer').innerText = qData.a;
-
-            document.getElementById('modal-answer-box').classList.add('hidden');
-            document.getElementById('btn-add-points').classList.add('hidden');
-            document.getElementById('btn-show-ans').classList.remove('hidden');
-
-            const modal = document.getElementById('question-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-
-        function toggleAnswer() {
-            document.getElementById('modal-answer-box').classList.remove('hidden');
-            document.getElementById('btn-show-ans').classList.add('hidden');
-            document.getElementById('btn-add-points').classList.remove('hidden');
-        }
-
-        function claimPoints() {
-            totalScore += currentPoints;
-            document.getElementById('user-score').innerText = totalScore;
-
-            if (currentBtnId) {
-                const btn = document.getElementById(currentBtnId);
-                btn.disabled = true;
-                btn.classList.remove('bg-emerald-500', 'bg-emerald-600', 'bg-emerald-700', 'bg-blue-500', 'bg-blue-600', 'bg-blue-700', 'bg-purple-500', 'bg-purple-600', 'bg-purple-700');
-                btn.classList.add('bg-slate-300', 'text-slate-500', 'line-through', 'cursor-not-allowed');
-                btn.innerHTML = `<i class="fa-solid fa-check"></i> ${currentPoints}`;
-            }
-
-            closeModal();
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('question-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-
-        // --- TASK 2: CLICK TO MATCH GAME LOGIC ---
-        const matchingPairs = [
-            { id: 1, func: "=СУММ()", desc: "Сандарды немесе ұяшықтар диапазонының қосындысын есептейді" },
-            { id: 2, func: "=ABS()", desc: "Санның модулін (абсолюттік оң мәнін) қайтарады" },
-            { id: 3, func: "=КОРЕНЬ()", desc: "Санның квадрат түбірін есептейді (аргумент оң болуы тиіс)" },
-            { id: 4, func: "=СТЕПЕНЬ()", desc: "Санды көрсетілген дәрежеге көтереді" },
-            { id: 5, func: "=СУММЕСЛИ()", desc: "Берілген арнайы шартқа сәйкес келетін сандарды қосады" }
-        ];
-
-        let selectedFuncId = null;
-        let matchedPairsCount = 0;
-
-        function initMatching() {
-            selectedFuncId = null;
-            matchedPairsCount = 0;
-
-            const funcListContainer = document.getElementById('matching-functions-list');
-            const descListContainer = document.getElementById('matching-descs-list');
-            const resDiv = document.getElementById('matching-result');
-            
-            resDiv.classList.add('hidden');
-            resDiv.className = "mt-8 p-4 rounded-xl text-center font-semibold text-lg hidden";
-
-            funcListContainer.innerHTML = '';
-            descListContainer.innerHTML = '';
-
-            // Render Functions (left side)
-            matchingPairs.forEach(item => {
-                const btn = document.createElement('button');
-                btn.id = `func-btn-${item.id}`;
-                btn.onclick = () => selectFunc(item.id);
-                btn.className = "w-full p-4 text-left font-mono text-lg font-bold text-slate-700 bg-white border-2 border-slate-200 rounded-xl shadow-sm hover:border-blue-400 hover:bg-blue-50/50 transition flex justify-between items-center";
-                btn.innerHTML = `<span>${item.func}</span> <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>`;
-                funcListContainer.appendChild(btn);
-            });
-
-            // Shuffle Descriptions for Right side
-            const shuffled = [...matchingPairs].sort(() => Math.random() - 0.5);
-
-            // Render Descriptions (right side)
-            shuffled.forEach(item => {
-                const btn = document.createElement('button');
-                btn.id = `desc-btn-${item.id}`;
-                btn.onclick = () => selectDesc(item.id);
-                btn.className = "w-full p-4 text-left text-sm font-medium text-slate-700 bg-white border-2 border-slate-200 rounded-xl shadow-sm hover:border-emerald-400 hover:bg-emerald-50/50 transition flex justify-between items-center";
-                btn.innerHTML = `<span>${item.desc}</span> <i class="fa-regular fa-circle text-slate-300"></i>`;
-                descListContainer.appendChild(btn);
-            });
-        }
-
-        function selectFunc(id) {
-            matchingPairs.forEach(item => {
-                const btn = document.getElementById(`func-btn-${item.id}`);
-                if (btn && !btn.disabled) {
-                    btn.classList.remove('border-amber-500', 'bg-amber-50', 'ring-2', 'ring-amber-300');
-                }
-            });
-
-            selectedFuncId = id;
-            const currentBtn = document.getElementById(`func-btn-${id}`);
-            currentBtn.classList.add('border-amber-500', 'bg-amber-50', 'ring-2', 'ring-amber-300');
-        }
-
-        function selectDesc(descId) {
-            if (!selectedFuncId) {
-                const resDiv = document.getElementById('matching-result');
-                resDiv.classList.remove('hidden');
-                resDiv.className = "mt-6 p-3 rounded-xl text-center font-medium bg-amber-100 text-amber-800 text-sm";
-                resDiv.innerText = "⚠️ Алдымен сол жақтан функцияны таңдаңыз!";
-                return;
-            }
-
-            const funcBtn = document.getElementById(`func-btn-${selectedFuncId}`);
-            const descBtn = document.getElementById(`desc-btn-${descId}`);
-
-            if (selectedFuncId === descId) {
-                // Correct match!
-                funcBtn.className = "w-full p-4 text-left font-mono text-lg font-bold text-emerald-800 bg-emerald-100 border-2 border-emerald-500 rounded-xl shadow-sm flex justify-between items-center cursor-default";
-                funcBtn.innerHTML = `<span>${funcBtn.querySelector('span').innerText}</span> <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i>`;
-                funcBtn.disabled = true;
-
-                descBtn.className = "w-full p-4 text-left text-sm font-medium text-emerald-800 bg-emerald-100 border-2 border-emerald-500 rounded-xl shadow-sm flex justify-between items-center cursor-default";
-                descBtn.innerHTML = `<span>${descBtn.querySelector('span').innerText}</span> <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i>`;
-                descBtn.disabled = true;
-
-                selectedFuncId = null;
-                matchedPairsCount++;
-
-                const resDiv = document.getElementById('matching-result');
-                resDiv.classList.add('hidden');
-
-                if (matchedPairsCount === matchingPairs.length) {
-                    resDiv.classList.remove('hidden');
-                    resDiv.className = "mt-6 p-4 rounded-xl text-center font-bold text-lg bg-emerald-500 text-white shadow-lg animate-bounce";
-                    resDiv.innerHTML = "🎉 Тамаша! Барлық функциялар мен сипаттамалар дұрыс сәйкестендірілді!";
-                }
-            } else {
-                descBtn.classList.add('border-red-500', 'bg-red-50', 'animate-shake');
-                setTimeout(() => {
-                    descBtn.classList.remove('border-red-500', 'bg-red-50', 'animate-shake');
-                }, 500);
-
-                const resDiv = document.getElementById('matching-result');
-                resDiv.classList.remove('hidden');
-                resDiv.className = "mt-6 p-3 rounded-xl text-center font-medium bg-red-100 text-red-700 text-sm";
-                resDiv.innerText = "❌ Сәйкес келмейді. Басқа нұсқасын таңдап көріңіз!";
-            }
-        }
-
-        // --- TASK 3: QUIZ LOGIC ---
-        function checkQuiz() {
-            const answers = { q1: 'B', q2: 'B', q3: 'B', q4: 'C' };
-            let score = 0;
-            const total = 4;
-
-            for (let q in answers) {
-                const selected = document.querySelector(`input[name="${q}"]:checked`);
-                if (selected && selected.value === answers[q]) {
-                    score++;
-                }
-            }
-
-            const quizRes = document.getElementById('quiz-result');
-            quizRes.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-amber-100', 'text-amber-900');
-
-            if (score === total) {
-                quizRes.classList.add('bg-emerald-100', 'text-emerald-900');
-                quizRes.innerHTML = `
-                    <h3 class="text-2xl font-bold mb-2">🎉 Керемет нәтиже!</h3>
-                    <p class="text-lg">Сіз барлық <b>${score}/${total}</b> сұраққа дұрыс жауап бердіңіз. Excel функцияларын өте жақсы меңгергенсіз!</p>
-                `;
-            } else {
-                quizRes.classList.add('bg-amber-100', 'text-amber-900');
-                quizRes.innerHTML = `
-                    <h3 class="text-xl font-bold mb-2">Нәтиже: ${score} / ${total}</h3>
-                    <p>Қателескен сұрақтарыңыз бар. Ережені қайталап, қайтадан байқап көріңіз!</p>
-                `;
-            }
-        }
-
-        // Page load initialization
-        window.onload = function() {
-            initMatching();
-        };
-    </script>
+];
+const extraTasks = [
+  {
+    "id": "subtract",
+    "subject": "Математика",
+    "emoji": "➖",
+    "color": "blue",
+    "title": "Азайту амалын тексер",
+    "desc": "Азайту амалын кері қосумен тексер.",
+    "prompt": "72 − 28 неше болады?",
+    "ai": "72 − 28 = 54. Жауабы — 54.",
+    "source": "Тексеру: 72 − 20 = 52; 52 − 8 = 44. Кері амал: 44 + 28 = 72.",
+    "checks": [
+      {
+        "q": "ЖИ жауабы дұрыс па?",
+        "opts": [
+          "Дұрыс",
+          "Қате",
+          "Бұл жеке пікір"
+        ],
+        "correct": 1,
+        "why": "72 − 28 = 44, 54 емес."
+      },
+      {
+        "q": "Қай жерде қате кеткен?",
+        "opts": [
+          "Азайту нәтижесінде: 54",
+          "72 санында",
+          "28 санында"
+        ],
+        "correct": 0,
+        "why": "Қате — азайту амалының нәтижесінде."
+      },
+      {
+        "q": "Қай дәлел сенімді?",
+        "opts": [
+          "54 саны үлкен көрінеді",
+          "44 + 28 = 72 кері амалы орындалады",
+          "ЖИ осылай жазды"
+        ],
+        "correct": 1,
+        "why": "Кері амал арқылы 44 жауабы тексеріледі."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "72 − 28 = 54",
+          "72 − 28 = 44",
+          "72 − 28 = 46"
+        ],
+        "correct": 1,
+        "why": "Дұрыс жауап — 44."
+      }
+    ],
+    "tip": "Азайтуды кері қосу амалымен тексеруге болады.",
+    "model": "72 − 28 = 44. Тексеру: 44 + 28 = 72.",
+    "type": "quiz"
+  },
+  {
+    "id": "division",
+    "subject": "Математика",
+    "emoji": "➗",
+    "color": "purple",
+    "title": "Бөлуді дәлелде",
+    "desc": "Бөлудің нәтижесін көбейтумен тексер.",
+    "prompt": "36 алманы 4 балаға тең бөлді. Әр бала неше алма алады?",
+    "ai": "36 : 4 = 8. Әр бала 8 алма алады.",
+    "source": "Көбейту арқылы тексеру: 9 × 4 = 36.",
+    "checks": [
+      {
+        "q": "ЖИ жауабы дұрыс па?",
+        "opts": [
+          "Дұрыс",
+          "Қате",
+          "Жеке пікір"
+        ],
+        "correct": 1,
+        "why": "9 × 4 = 36, демек әр балаға 9 алма тиеді."
+      },
+      {
+        "q": "Қай амалмен тексеруге болады?",
+        "opts": [
+          "9 × 4 = 36",
+          "9 + 4 = 36",
+          "36 − 4 = 9"
+        ],
+        "correct": 0,
+        "why": "Бөлуді көбейтумен тексереміз."
+      },
+      {
+        "q": "Әр балаға неше алма тиеді?",
+        "opts": [
+          "8 алма",
+          "9 алма",
+          "10 алма"
+        ],
+        "correct": 1,
+        "why": "36 : 4 = 9."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "Әр балаға 9 алма",
+          "Әр балаға 6 алма",
+          "Әр балаға 12 алма"
+        ],
+        "correct": 0,
+        "why": "36 алманы төрт балаға тең бөлсек, әрқайсысына 9 алмадан тиеді."
+      }
+    ],
+    "tip": "Бөлуді көбейту амалымен тексер.",
+    "model": "36 : 4 = 9 алма. Тексеру: 9 × 4 = 36.",
+    "type": "quiz"
+  },
+  {
+    "id": "perimeter",
+    "subject": "Математика",
+    "emoji": "📐",
+    "color": "orange",
+    "title": "Периметрді тап",
+    "desc": "Периметр мен ауданды шатастырма.",
+    "prompt": "Ұзындығы 5 см, ені 3 см тіктөртбұрыштың периметрі неше?",
+    "ai": "Периметрі 5 × 3 = 15 см.",
+    "source": "Периметр — барлық қабырғалардың қосындысы: 5 + 3 + 5 + 3 = 16 см.",
+    "checks": [
+      {
+        "q": "ЖИ жауабында қандай қате бар?",
+        "opts": [
+          "Периметр мен аудан шатастырылған",
+          "Есепте қате жоқ",
+          "Өлшем бірлігі ғана қате"
+        ],
+        "correct": 0,
+        "why": "5 × 3 — тіктөртбұрыштың ауданын табу амалы, периметр емес."
+      },
+      {
+        "q": "Периметрді табу үшін не істеу керек?",
+        "opts": [
+          "Ұзындығын енге көбейту",
+          "Барлық қабырғаларын қосу",
+          "Тек ұзындығын алу"
+        ],
+        "correct": 1,
+        "why": "Периметр — барлық қабырғалардың қосындысы."
+      },
+      {
+        "q": "Қай есептеу дұрыс?",
+        "opts": [
+          "5 × 3 = 15 см",
+          "5 + 3 + 5 + 3 = 16 см",
+          "5 + 3 = 8 см"
+        ],
+        "correct": 1,
+        "why": "Төрт қабырғаның қосындысы 16 см."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "Периметрі 8 см",
+          "Периметрі 15 см",
+          "Периметрі 16 см"
+        ],
+        "correct": 2,
+        "why": "Тіктөртбұрыштың периметрі — 16 см."
+      }
+    ],
+    "tip": "Периметрді табу үшін барлық қабырғаларды қос.",
+    "model": "P = 5 + 3 + 5 + 3 = 16 см.",
+    "type": "quiz"
+  },
+  {
+    "id": "fraction",
+    "subject": "Математика",
+    "emoji": "🍰",
+    "color": "pink",
+    "title": "Бөлшекті салыстыр",
+    "desc": "Бірдей бөліктерге бөлінген бүтінді елестет.",
+    "prompt": "Торттың жартысын бөлшекпен қалай жазамыз?",
+    "ai": "Торттың жартысы — 1/3.",
+    "source": "Бүтін екі тең бөлікке бөлінсе, бір бөлігі 1/2 болады. 1/2 = 2/4.",
+    "checks": [
+      {
+        "q": "ЖИ жауабы дұрыс па?",
+        "opts": [
+          "Дұрыс",
+          "Қате",
+          "Мұны білу мүмкін емес"
+        ],
+        "correct": 1,
+        "why": "Жарты — 1/2, ал 1/3 бүтіннің үш тең бөлігінің біреуі."
+      },
+      {
+        "q": "Қай бөлшек жартыны білдіреді?",
+        "opts": [
+          "1/3",
+          "1/2",
+          "1/4"
+        ],
+        "correct": 1,
+        "why": "Екі тең бөліктің біреуі — 1/2."
+      },
+      {
+        "q": "Қай теңдік дұрыс?",
+        "opts": [
+          "1/2 = 2/4",
+          "1/2 = 1/3",
+          "1/2 = 3/4"
+        ],
+        "correct": 0,
+        "why": "1/2 мен 2/4 бірдей үлесті білдіреді."
+      },
+      {
+        "q": "Дұрыс тұжырымды таңда.",
+        "opts": [
+          "Жарты — бүтіннің үштен бірі",
+          "Жарты — бүтіннің екі тең бөлігінің бірі",
+          "Жарты — бүтіннің төрттен бірі"
+        ],
+        "correct": 1,
+        "why": "Жартыны алу үшін бүтінді екі тең бөлікке бөлеміз."
+      }
+    ],
+    "tip": "Бөлшек бүтіннің тең бөліктерін көрсетеді.",
+    "model": "Торттың жартысы — 1/2. Оған тең бөлшек — 2/4.",
+    "type": "quiz"
+  },
+  {
+    "id": "hour",
+    "subject": "Математика",
+    "emoji": "⏰",
+    "color": "yellow",
+    "title": "Уақыт өлшемін тексер",
+    "desc": "Сағат пен минуттың байланысын еске түсір.",
+    "prompt": "1 сағатта неше минут бар?",
+    "ai": "1 сағатта 100 минут бар.",
+    "source": "Уақыт өлшемі: 1 сағат = 60 минут.",
+    "checks": [
+      {
+        "q": "ЖИ жауабы дұрыс па?",
+        "opts": [
+          "Дұрыс",
+          "Қате",
+          "Жеке пікір"
+        ],
+        "correct": 1,
+        "why": "Бір сағат 60 минуттан тұрады."
+      },
+      {
+        "q": "Қай теңдік дұрыс?",
+        "opts": [
+          "1 сағат = 100 минут",
+          "1 сағат = 60 минут",
+          "1 сағат = 30 минут"
+        ],
+        "correct": 1,
+        "why": "Уақыт өлшемдерінің дұрыс байланысы — 1 сағат 60 минут."
+      },
+      {
+        "q": "Екі сағатта неше минут болады?",
+        "opts": [
+          "60 минут",
+          "100 минут",
+          "120 минут"
+        ],
+        "correct": 2,
+        "why": "60 + 60 = 120 минут."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "1 сағатта 60 минут бар",
+          "1 сағатта 100 минут бар",
+          "1 сағатта 24 минут бар"
+        ],
+        "correct": 0,
+        "why": "1 сағат = 60 минут."
+      }
+    ],
+    "tip": "Уақытты тексергенде сағат пен минуттың байланысын пайдалан.",
+    "model": "1 сағатта 60 минут бар. 2 сағатта 120 минут болады.",
+    "type": "quiz"
+  },
+  {
+    "id": "plant",
+    "subject": "Жаратылыстану",
+    "emoji": "🌱",
+    "color": "aqua",
+    "title": "Өсімдікке не қажет?",
+    "desc": "Өсімдіктің өсуіне қажет жағдайларды салыстыр.",
+    "prompt": "Өсімдіктің өсуіне не көмектеседі?",
+    "ai": "Өсімдікке тек топырақ қажет. Су мен жарық керек емес.",
+    "source": "Өсімдік өсуі үшін су, жарық, ауа және топырақтағы қоректік заттар қажет.",
+    "checks": [
+      {
+        "q": "ЖИ жауабында қандай қате бар?",
+        "opts": [
+          "Өсімдікке тек топырақ керек деуі",
+          "Өсімдік туралы сұрақ қоюы",
+          "Өсімдік сөзін қолдануы"
+        ],
+        "correct": 0,
+        "why": "Өсімдікке су мен жарық та қажет."
+      },
+      {
+        "q": "Қайсысы өсімдікке қажет жағдайларды дұрыс көрсетеді?",
+        "opts": [
+          "Су, жарық және ауа",
+          "Тек тас пен құм",
+          "Тек қараңғылық"
+        ],
+        "correct": 0,
+        "why": "Өсімдікке су, жарық, ауа және қоректік заттар қажет."
+      },
+      {
+        "q": "Қай бақылау дұрыс дәлел болады?",
+        "opts": [
+          "Өсімдікке су беріп, жарық түсетін жерге қою",
+          "Өсімдікті жабық қорапқа сусыз қою",
+          "Өсімдікке тас жинау"
+        ],
+        "correct": 0,
+        "why": "Су мен жарықтың әсерін бақылауға болады."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "Өсімдікке тек топырақ қажет",
+          "Өсімдікке су, жарық, ауа және қоректік заттар қажет",
+          "Өсімдікке ештеңе қажет емес"
+        ],
+        "correct": 1,
+        "why": "Өсімдіктің өсуіне бірнеше жағдай қажет."
+      }
+    ],
+    "tip": "Өсімдікті бақылағанда өсуіне қажет жағдайларды бірге қарастыр.",
+    "model": "Өсімдікке су, жарық, ауа және топырақтағы қоректік заттар қажет.",
+    "type": "quiz"
+  },
+  {
+    "id": "daynight",
+    "subject": "Жаратылыстану",
+    "emoji": "🌍",
+    "color": "blue",
+    "title": "Күн мен түн қалай ауысады?",
+    "desc": "Жердің қозғалысы туралы ғылыми деректі тексер.",
+    "prompt": "Күн мен түннің ауысуына не себеп болады?",
+    "ai": "Күн Жерді тәулігіне бір рет айналып шығады, сондықтан түн болады.",
+    "source": "Күн мен түн Жердің өз осінен айналуына байланысты ауысады. Жердің Күнге қараған бетінде күн, қарсы бетінде түн болады.",
+    "checks": [
+      {
+        "q": "ЖИ жауабы дұрыс па?",
+        "opts": [
+          "Дұрыс",
+          "Қате түсіндірілген",
+          "Бұл жеке пікір"
+        ],
+        "correct": 1,
+        "why": "Күн мен түннің ауысуына Жердің өз осінен айналуы себеп."
+      },
+      {
+        "q": "Қай қозғалыс күн мен түнді туғызады?",
+        "opts": [
+          "Жердің өз осінен айналуы",
+          "Айдың Жерді айналуы",
+          "Бұлттардың қозғалысы"
+        ],
+        "correct": 0,
+        "why": "Жер өз осінен айналғандықтан, күн мен түн алмасады."
+      },
+      {
+        "q": "Қай дерек түсіндіруді қолдайды?",
+        "opts": [
+          "Жердің бір бөлігі Күнге қараған кезде жарық түседі",
+          "Күн түнде сөніп қалады",
+          "Бұлттар Жерді айналдырады"
+        ],
+        "correct": 0,
+        "why": "Күнге қараған бөлік жарық алады, ал қарсы бетінде түн болады."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "Күн мен түн бұлттың қозғалысынан болады",
+          "Күн мен түн Жердің өз осінен айналуынан болады",
+          "Күн мен түн Айдың түсіне байланысты"
+        ],
+        "correct": 1,
+        "why": "Жердің өз осінен айналуы күн мен түннің ауысуын туғызады."
+      }
+    ],
+    "tip": "Ғылыми түсіндірмені Жердің қозғалысы туралы дерекпен тексер.",
+    "model": "Күн мен түн Жердің өз осінен айналуына байланысты ауысады.",
+    "type": "quiz"
+  },
+  {
+    "id": "watercycle",
+    "subject": "Жаратылыстану",
+    "emoji": "☁️",
+    "color": "purple",
+    "title": "Су айналымын түсін",
+    "desc": "Судың табиғаттағы айналым кезеңдерін ретімен ойла.",
+    "prompt": "Жаңбыр суы табиғатта қалай айналады?",
+    "ai": "Жаңбыр суы жерге түскен соң мәңгі жоғалып кетеді.",
+    "source": "Күн жылуынан су буланады, бу салқындап бұлтқа айналады, кейін жауын-шашын болып жерге түседі.",
+    "checks": [
+      {
+        "q": "ЖИ жауабында қандай қате бар?",
+        "opts": [
+          "Су мәңгі жоғалады деуі",
+          "Жаңбыр туралы айтуы",
+          "Судың жерге түсуін атауы"
+        ],
+        "correct": 0,
+        "why": "Су табиғатта айналым жасап, буланып қайтадан жауын-шашын түрінде түседі."
+      },
+      {
+        "q": "Су айналымының дұрыс кезеңін таңда.",
+        "opts": [
+          "Булану — бұлт түзілу — жауын-шашын",
+          "Жаңбыр — су жоғалады — тоқтайды",
+          "Бұлт — тас — қарындаш"
+        ],
+        "correct": 0,
+        "why": "Су буланып, бұлтқа айналып, жауын-шашын болып қайта түседі."
+      },
+      {
+        "q": "Қай дерек ЖИ жауабын жоққа шығарады?",
+        "opts": [
+          "Көлдер мен өзендерден су буланады",
+          "Су ешқашан өзгермейді",
+          "Жаңбыр тек жазда жауады"
+        ],
+        "correct": 0,
+        "why": "Булану су айналымының маңызды кезеңі."
+      },
+      {
+        "q": "Дұрыс тұжырымды таңда.",
+        "opts": [
+          "Су жаңбырдан кейін мәңгі жоғалады",
+          "Су табиғатта үздіксіз айналым жасайды",
+          "Су тек бұлтта болады"
+        ],
+        "correct": 1,
+        "why": "Су буланып, бұлтқа айналып, жауын-шашын ретінде қайта түседі."
+      }
+    ],
+    "tip": "Су айналымы — табиғаттағы үздіксіз үдеріс.",
+    "model": "Су буланады, бу салқындап бұлт түзеді, кейін жауын-шашын болып жерге түседі.",
+    "type": "quiz"
+  },
+  {
+    "id": "foodchain",
+    "subject": "Жаратылыстану",
+    "emoji": "🦊",
+    "color": "orange",
+    "title": "Қоректік тізбекті құр",
+    "desc": "Тірі ағзалардың қоректік байланысын тексер.",
+    "prompt": "Шөп, қоян және түлкі арасындағы қоректік тізбек қалай құрылады?",
+    "ai": "Түлкі шөппен қоректенеді, ал қоян түлкіні жейді.",
+    "source": "Қоян шөппен қоректенеді, ал түлкі қоянды аулайды: шөп → қоян → түлкі.",
+    "checks": [
+      {
+        "q": "ЖИ жауабындағы байланыс дұрыс па?",
+        "opts": [
+          "Дұрыс",
+          "Қате, қоректік байланыс керісінше берілген",
+          "Бұл жеке пікір"
+        ],
+        "correct": 1,
+        "why": "Қоян шөп жейді, түлкі қоянмен қоректене алады."
+      },
+      {
+        "q": "Қайсысы қоректік тізбекті дұрыс көрсетеді?",
+        "opts": [
+          "Түлкі → шөп → қоян",
+          "Шөп → қоян → түлкі",
+          "Қоян → түлкі → шөп"
+        ],
+        "correct": 1,
+        "why": "Өсімдікпен қоян қоректенеді, ал түлкі қоянды аулайды."
+      },
+      {
+        "q": "Қай тұжырым дәлел бола алады?",
+        "opts": [
+          "Қоян шөппен қоректенеді",
+          "Түлкі шөпті суарады",
+          "Шөп түлкіні аулайды"
+        ],
+        "correct": 0,
+        "why": "Қоянның шөппен қоректенуі тізбектің бірінші байланысын көрсетеді."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "Шөп → қоян → түлкі",
+          "Түлкі → шөп → қоян",
+          "Қоян → шөп → түлкі"
+        ],
+        "correct": 0,
+        "why": "Қоректік тізбек: шөп → қоян → түлкі."
+      }
+    ],
+    "tip": "Қоректік тізбекте кімнің немен қоректенетінін ретімен тексер.",
+    "model": "Шөп → қоян → түлкі. Қоян шөппен, түлкі қоянмен қоректенеді.",
+    "type": "quiz"
+  },
+  {
+    "id": "moonlight",
+    "subject": "Жаратылыстану",
+    "emoji": "🌙",
+    "color": "pink",
+    "title": "Ай жарығының сыры",
+    "desc": "Айдың жарық көзі туралы түсіндірмені тексер.",
+    "prompt": "Ай неге түнде жарық болып көрінеді?",
+    "ai": "Ай өзінен жарық шығарады, Күнге мүлде тәуелді емес.",
+    "source": "Ай Күн сәулесін шағылыстырады. Сондықтан бізге жарық болып көрінеді.",
+    "checks": [
+      {
+        "q": "ЖИ жауабында қандай қате бар?",
+        "opts": [
+          "Ай өзінен жарық шығарады деуі",
+          "Айдың түнде көрінетінін айтуы",
+          "Күнді атауы"
+        ],
+        "correct": 0,
+        "why": "Ай өз жарығын шығармайды, Күн сәулесін шағылыстырады."
+      },
+      {
+        "q": "Қай тұжырым дұрыс?",
+        "opts": [
+          "Ай Күн сәулесін шағылыстырады",
+          "Ай өзінен күн сәулесін шығарады",
+          "Ай — жанып тұрған жұлдыз"
+        ],
+        "correct": 0,
+        "why": "Ай — Жердің табиғи серігі, ол Күн сәулесін шағылыстырады."
+      },
+      {
+        "q": "Қай дерек осы түсіндірмені қолдайды?",
+        "opts": [
+          "Айдың жарық бөлігі Күн сәулесі түскен бетімен байланысты",
+          "Ай күндіз жоғалып кетеді",
+          "Айдың түсі күн сайын бірдей емес"
+        ],
+        "correct": 0,
+        "why": "Айдың жарық көрінуі Күн сәулесінің түсуіне байланысты."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "Ай өзінен жарық шығарады",
+          "Ай Күн сәулесін шағылыстырып жарық болып көрінеді",
+          "Ай — Күннің орнына жүретін жұлдыз"
+        ],
+        "correct": 1,
+        "why": "Ай Күн сәулесін шағылыстырады."
+      }
+    ],
+    "tip": "Көрінген құбылыстың себебін түсіндіретін ғылыми дерек ізде.",
+    "model": "Ай өзінен жарық шығармайды, Күн сәулесін шағылыстырады.",
+    "type": "quiz"
+  },
+  {
+    "id": "synonym",
+    "subject": "Қазақ тілі",
+    "emoji": "📚",
+    "color": "aqua",
+    "title": "Синонимді тап",
+    "desc": "Мағынасы жақын сөздерді салыстыр.",
+    "prompt": "«Батыл» сөзінің мағынасы жақын сөзін тап.",
+    "ai": "«Батыл» сөзінің мағынасы — қорқақ.",
+    "source": "Синонимдер — мағыналары жақын сөздер. «Батыл» сөзіне «ержүрек» сөзі мағыналас.",
+    "checks": [
+      {
+        "q": "ЖИ жауабында қандай қате бар?",
+        "opts": [
+          "Мағынасы қарама-қарсы сөзді синоним деп берген",
+          "Сөзді дұрыс жазған",
+          "Сөйлемде тыныс белгісі бар"
+        ],
+        "correct": 0,
+        "why": "«Қорқақ» — «батыл» сөзінің антонимі, синонимі емес."
+      },
+      {
+        "q": "Қай сөз «батыл» сөзіне мағыналас?",
+        "opts": [
+          "Ержүрек",
+          "Қорқақ",
+          "Әлсіз"
+        ],
+        "correct": 0,
+        "why": "«Ержүрек» пен «батыл» сөздерінің мағынасы жақын."
+      },
+      {
+        "q": "Қай жұп синоним болады?",
+        "opts": [
+          "Батыл — қорқақ",
+          "Батыл — ержүрек",
+          "Батыл — баяу"
+        ],
+        "correct": 1,
+        "why": "Синонимдер мағынасы жақын сөздер."
+      },
+      {
+        "q": "Дұрыс түзетуді таңда.",
+        "opts": [
+          "«Батыл» сөзінің синонимі — «қорқақ»",
+          "«Батыл» сөзінің синонимі — «ержүрек»",
+          "«Батыл» сөзінің синонимі — «суық»"
+        ],
+        "correct": 1,
+        "why": "«Ержүрек» — «батыл» сөзінің синонимі."
+      }
+    ],
+    "tip": "Синоним мағынасы жақын сөздер екенін есте сақта.",
+    "model": "«Батыл» сөзінің синонимі — «ержүрек», ал «қорқақ» — антонимі.",
+    "type": "quiz"
+  },
+  {
+    "id": "antonym",
+    "subject": "Қазақ тілі",
+    "emoji": "↔️",
+    "color": "yellow",
+    "title": "Антонимді анықта",
+    "desc": "Қарама-қарсы мағыналы сөздерді ажырат.",
+    "prompt": "«Жомарт» сөзінің антонимі қандай?",
+    "ai": "«Жомарт» сөзінің антонимі — мейірімді.",
+    "source": "Антонимдер — мағыналары қарама-қарсы сөздер. «Жомарт» сөзінің антонимі — «сараң».",
+    "checks": [
+      {
+        "q": "ЖИ жауабында қандай қате бар?",
+        "opts": [
+          "Мағынасы жақын сөзді антоним деп берген",
+          "Сөзді бас әріппен жазған",
+          "Сөйлемді қысқа құрған"
+        ],
+        "correct": 0,
+        "why": "«Сараң» — «жомарт» сөзіне қарама-қарсы мағына береді."
+      },
+      {
+        "q": "Қай сөз «жомарт» сөзіне қарама-қарсы?",
+        "opts": [
+          "Сараң",
+          "Кеңпейіл",
+          "Ақкөңіл"
+        ],
+        "correct": 0,
+        "why": "«Сараң» — «жомарт» сөзінің антонимі."
+      },
+      {
+        "q": "Қай жұп антоним болады?",
+        "opts": [
+          "Жомарт — кеңпейіл",
+          "Жомарт — сараң",
+          "Жомарт — ақкөңіл"
+        ],
+        "correct": 1,
+        "why": "Антонимдер қарама-қарсы мағынаны білдіреді."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "«Жомарт» сөзінің антонимі — «сараң»",
+          "«Жомарт» сөзінің антонимі — «ақкөңіл»",
+          "«Жомарт» сөзінің антонимі — «кеңпейіл»"
+        ],
+        "correct": 0,
+        "why": "«Сараң» сөзі «жомарт» сөзіне қарама-қарсы."
+      }
+    ],
+    "tip": "Антонимдерді анықтағанда сөздердің мағынасына назар аудар.",
+    "model": "«Жомарт» сөзінің антонимі — «сараң».",
+    "type": "quiz"
+  },
+  {
+    "id": "adjective",
+    "subject": "Қазақ тілі",
+    "emoji": "🎨",
+    "color": "purple",
+    "title": "Сын есімді таны",
+    "desc": "Сөз табын сұрақ қою арқылы анықта.",
+    "prompt": "«Жасыл жапырақ» тіркесіндегі «жасыл» сөзі қандай сөз табы?",
+    "ai": "«Жасыл» — зат есім, себебі ол заттың атын білдіреді.",
+    "source": "Сын есім заттың сынын, түсін, түрін білдіреді. «Қандай?» деген сұраққа жауап береді: қандай жапырақ? — жасыл жапырақ.",
+    "checks": [
+      {
+        "q": "ЖИ жауабындағы қате қайсы?",
+        "opts": [
+          "«Жасыл» сөзін зат есім деп атаған",
+          "Жапырақ сөзін атаған",
+          "Тіркесті екі сөзден құраған"
+        ],
+        "correct": 0,
+        "why": "«Жасыл» заттың түсін білдіреді, сондықтан сын есім."
+      },
+      {
+        "q": "«Жасыл» сөзі қандай сұраққа жауап береді?",
+        "opts": [
+          "Қандай?",
+          "Кім?",
+          "Не істеді?"
+        ],
+        "correct": 0,
+        "why": "«Жасыл» — қандай? деген сұраққа жауап беретін сын есім."
+      },
+      {
+        "q": "Қай сөз сын есім?",
+        "opts": [
+          "Жүгіреді",
+          "Жасыл",
+          "Дәптер"
+        ],
+        "correct": 1,
+        "why": "«Жасыл» заттың түсін білдіреді."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "«Жасыл» — зат есім",
+          "«Жасыл» — сын есім",
+          "«Жасыл» — етістік"
+        ],
+        "correct": 1,
+        "why": "«Жасыл» — сын есім."
+      }
+    ],
+    "tip": "Сөз табын анықтағанда сөзге сұрақ қой.",
+    "model": "«Жасыл» — сын есім, себебі қандай? деген сұраққа жауап береді.",
+    "type": "quiz"
+  },
+  {
+    "id": "questionmark",
+    "subject": "Қазақ тілі",
+    "emoji": "❓",
+    "color": "pink",
+    "title": "Тыныс белгісін тексер",
+    "desc": "Сөйлемнің айтылу мақсатына сай тыныс белгісін таңда.",
+    "prompt": "«Сен бүгін кітап оқыдың ба» сөйлемінің соңына қандай белгі қойылады?",
+    "ai": "Сөйлемнің соңына нүкте қойылады.",
+    "source": "Сұраулы сөйлем сұрақ қою мақсатында айтылады және соңына сұрақ белгісі (?) қойылады.",
+    "checks": [
+      {
+        "q": "ЖИ жауабында қандай қате бар?",
+        "opts": [
+          "Сұраулы сөйлемге нүкте қоюы",
+          "Кітап сөзін қолдануы",
+          "Сөйлемді бас әріппен бастауы"
+        ],
+        "correct": 0,
+        "why": "«Оқыдың ба?» — сұраулы сөйлем, соңына сұрақ белгісі қойылады."
+      },
+      {
+        "q": "Қай тыныс белгісі қажет?",
+        "opts": [
+          "Нүкте (.)",
+          "Сұрақ белгісі (?)",
+          "Үтір (,)"
+        ],
+        "correct": 1,
+        "why": "Сөйлем сұрақ түрінде айтылған."
+      },
+      {
+        "q": "Қай сөйлем сұраулы?",
+        "opts": [
+          "Мен кітап оқыдым.",
+          "Сен кітап оқыдың ба?",
+          "Кітапты аш."
+        ],
+        "correct": 1,
+        "why": "«Оқыдың ба?» деген сұрақ қойылып тұр."
+      },
+      {
+        "q": "Дұрыс жазылған нұсқаны таңда.",
+        "opts": [
+          "Сен бүгін кітап оқыдың ба.",
+          "Сен бүгін кітап оқыдың ба?",
+          "Сен бүгін кітап оқыдың ба,"
+        ],
+        "correct": 1,
+        "why": "Сұраулы сөйлемнің соңына сұрақ белгісі қойылады."
+      }
+    ],
+    "tip": "Сөйлемнің айтылу мақсатын анықтап, тыныс белгісін таңда.",
+    "model": "«Сен бүгін кітап оқыдың ба?» — сұраулы сөйлем.",
+    "type": "quiz"
+  },
+  {
+    "id": "factopinion",
+    "subject": "Қазақ тілі",
+    "emoji": "💬",
+    "color": "orange",
+    "title": "Факт пен пікірді ажырат",
+    "desc": "Тексерілетін дерек пен жеке көзқарасты салыстыр.",
+    "prompt": "«Қыс — ең қызықты жыл мезгілі» деген сөйлем нені білдіреді?",
+    "ai": "Бұл — барлық адамға ортақ дәлелденген факт.",
+    "source": "«Ең қызықты» деген баға адамның жеке көзқарасын білдіреді. Әр адамның пікірі әртүрлі болуы мүмкін.",
+    "checks": [
+      {
+        "q": "ЖИ жауабындағы қате қайсы?",
+        "opts": [
+          "Жеке пікірді баршаға ортақ факт деп көрсетуі",
+          "Қыс мезгілін атауы",
+          "Сөйлемді түсінікті жазуы"
+        ],
+        "correct": 0,
+        "why": "«Ең қызықты» — бағалау, ол әр адамға бірдей болмауы мүмкін."
+      },
+      {
+        "q": "Қай сөйлем жеке пікірді білдіреді?",
+        "opts": [
+          "Бір аптада жеті күн бар.",
+          "Менің ойымша, қыс қызықты.",
+          "Бір жылда он екі ай бар."
+        ],
+        "correct": 1,
+        "why": "«Менің ойымша» — жеке көзқарасты білдіреді."
+      },
+      {
+        "q": "Қай сөйлемді нақты дерекпен тексеруге болады?",
+        "opts": [
+          "Қыс — ең әдемі мезгіл.",
+          "Бір аптада жеті күн бар.",
+          "Маған қар ұнайды."
+        ],
+        "correct": 1,
+        "why": "Аптадағы күн санын күнтізбемен тексеруге болады."
+      },
+      {
+        "q": "Дұрыс түзетуді таңда.",
+        "opts": [
+          "Қыс бәріне міндетті түрде ұнайды.",
+          "Менің ойымша, қыс қызықты, бірақ әркімнің пікірі әртүрлі.",
+          "Қыс туралы пікір айтуға болмайды."
+        ],
+        "correct": 1,
+        "why": "Бұл нұсқа жеке пікірді фактіден ажыратады."
+      }
+    ],
+    "tip": "Факт тексерілетін дерекке сүйенеді, ал пікір адамның көзқарасын білдіреді.",
+    "model": "«Қыс — ең қызықты мезгіл» — жеке пікір, оны баршаға ортақ факт деуге болмайды.",
+    "type": "quiz"
+  },
+  {
+    "id": "eurasia",
+    "subject": "Дүниетану",
+    "emoji": "🧭",
+    "color": "blue",
+    "title": "Қазақстан қай материкте?",
+    "desc": "Картадан Қазақстанның орналасқан жерін анықта.",
+    "prompt": "Қазақстан қай материкте орналасқан?",
+    "ai": "Қазақстан Африка материгінде орналасқан.",
+    "source": "Дүниежүзі картасынан Қазақстанды тап: Қазақстан Еуразия материгінде орналасқан.",
+    "checks": [
+      {
+        "q": "ЖИ жауабы дұрыс па?",
+        "opts": [
+          "Дұрыс",
+          "Қате",
+          "Бұл жеке пікір"
+        ],
+        "correct": 1,
+        "why": "Қазақстан Африкада емес, Еуразия материгінде орналасқан."
+      },
+      {
+        "q": "Қай карта дерегі дұрыс?",
+        "opts": [
+          "Қазақстан Еуразия материгінде орналасқан",
+          "Қазақстан Африка материгінде орналасқан",
+          "Қазақстан Антарктидада орналасқан"
+        ],
+        "correct": 0,
+        "why": "Қазақстан Еуразия материгінің орталық бөлігінде орналасқан."
+      },
+      {
+        "q": "Қай құралмен тексерген дұрыс?",
+        "opts": [
+          "Дүниежүзі картасымен",
+          "Кездейсоқ әңгімемен",
+          "Ауа райы болжамымен"
+        ],
+        "correct": 0,
+        "why": "Материкті анықтау үшін дүниежүзі картасы қажет."
+      },
+      {
+        "q": "Дұрыс жауапты таңда.",
+        "opts": [
+          "Қазақстан Африкада орналасқан",
+          "Қазақстан Еуразияда орналасқан",
+          "Қазақстан Антарктидада орналасқан"
+        ],
+        "correct": 1,
+        "why": "Қазақстан Еуразия материгінде орналасқан."
+      }
+    ],
+    "tip": "Географиялық деректі картадан тексеру — сенімді тәсіл.",
+    "model": "Қазақстан Еуразия материгінде орналасқан.",
+    "type": "quiz"
+  }
+];
+tasks.push(...extraTasks);
+const navItems=[['home','Басты бет','home'],['tasks','Зерттеу миссиялары','grid'],['method','5 қадам әдісі','steps'],['teacher','Мұғалім кабинеті','teacher'],['about','Платформа туралы','info']];
+const guideNames=['Байқа','Белгіле','Дәлелде','Түзет','Қорытындыла'];
+const guideDesc=['ЖИ жауабын бағала','Күмәнді пікірді анықта','Дерекпен салыстыр','Дұрыс жауапты таңда','Не үйренгеніңді жаз'];
+let data={progress:load(storageKey,{}),custom:load(customKey,[])};
+let state={page:'home',active:null,run:null,revealed:false};
+let currentToastTimer;
+function load(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return v??fallback}catch{return fallback}}
+function save(){try{localStorage.setItem(storageKey,JSON.stringify(data.progress));localStorage.setItem(customKey,JSON.stringify(data.custom));}catch{toast('Бұл браузерде сақтау шектелген. Жұмыс уақытша жалғасады.')}}
+function toast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');clearTimeout(currentToastTimer);currentToastTimer=setTimeout(()=>el.classList.remove('show'),3300)}
+function allTasks(){return [...tasks,...data.custom]}
+function getTask(id){return allTasks().find(x=>x.id===id)}
+function completeCount(){return allTasks().filter(t=>data.progress[t.id]?.completedAt).length}
+function getScore(){return allTasks().reduce((acc,t)=>acc+(Number(data.progress[t.id]?.score)||0),0)}
+function formatDate(iso){if(!iso)return '—';try{return new Date(iso).toLocaleDateString('kk-KZ')}catch{return '—'}}
+function navTo(page){state.page=page;state.active=null;state.run=null;state.revealed=false;render();window.scrollTo({top:0,behavior:'instant'})}
+function begin(id){const t=getTask(id);if(!t)return;state.active=id;state.page='mission';state.revealed=false;state.run={step:0,selected:-1,feedback:null,firstWrong:false,score:0,notes:'',method:''};render();window.scrollTo({top:0,behavior:'instant'})}
+function updateChrome(){const done=completeCount();const total=allTasks().length;document.getElementById('side-score').textContent=`${done} / ${total} миссия`;document.getElementById('side-fill').style.width=`${total?done/total*100:0}%`;document.getElementById('breadcrumb').textContent='ОйLAB / '+({home:'Басты бет',tasks:'Миссиялар',method:'5 қадам әдісі',teacher:'Мұғалім кабинеті',about:'Платформа туралы',mission:getTask(state.active)?.title||'Миссия'}[state.page]||'Басты бет');document.getElementById('navigation').innerHTML=navItems.map(([id,label,icon])=>`<button class="nav-item ${state.page===id||(state.page==='mission'&&id==='tasks')?'active':''}" data-action="nav" data-id="${id}" ${state.page===id?'aria-current="page"':''}>${ico(icon,18)} <span>${E(label)}</span></button>`).join('')}
+function render(){updateChrome();const main=document.getElementById('content');let content;switch(state.page){case 'home':content=renderHome();break;case 'tasks':content=renderTasks();break;case 'method':content=renderMethod();break;case 'teacher':content=renderTeacher();break;case 'about':content=renderAbout();break;case 'mission':content=renderMission();break;default:content=renderHome()}main.innerHTML=content;}
+function missionCard(t,idx){const p=data.progress[t.id];return `<article class="mission-card"><div class="mission-top"><div class="mission-emoji ${E(t.color||'blue')}">${E(t.emoji)}</div><span class="mini-tag ${p?.completedAt?'done':''}">${p?.completedAt?'✓ Аяқталды':t.type==='custom'?'Өз тапсырмаң':'Зерттеу миссиясы'}</span></div><div class="mission-number">МИССИЯ ${String(idx+1).padStart(2,'0')}</div><h3>${E(t.title)}</h3><p class="mission-desc">${E(t.desc)}</p><div class="card-footer"><div><div class="card-subject">${E(t.subject)}</div>${p?.completedAt?`<div class="small-progress">${p.score==null?'Өзіндік тексеру':p.score+'/8 ұпай'} · дайын</div>`:''}</div><button class="card-open" data-action="begin" data-id="${E(t.id)}" aria-label="${E(t.title)} миссиясын ашу">${ico('arrow',18)}</button></div></article>`}
+function scoreStats(){const total=allTasks().length;const done=completeCount();const pct=total?Math.round(done/total*100):0;return `<div class="stats"><div class="stat"><div class="stat-icon">${ico('grid',22)}</div><div><div class="stat-label">Барлық миссия</div><div class="stat-value">${total} <span>тапсырма</span></div></div></div><div class="stat"><div class="stat-icon green">${ico('check',23)}</div><div><div class="stat-label">Аяқталды</div><div class="stat-value">${done} <span>/ ${total}</span></div></div></div><div class="stat"><div class="stat-icon gold">${ico('chart',22)}</div><div><div class="stat-label">Орындалу көрсеткіші</div><div class="stat-value">${pct}<span>%</span></div></div></div></div>`}
+function framework(){return `<div class="framework"><h3>🔎 Зерттеушінің 5 қадамы</h3><div class="steps">${guideNames.map((name,i)=>`<div class="step"><span class="step-number">${i+1}</span><span>${name}</span></div>`).join('')}</div></div>`}
+function renderHome(){const next=allTasks().find(t=>!data.progress[t.id]?.completedAt)||allTasks()[0];return `<section class="hero"><div class="hero-copy"><div class="hero-kicker">✧ БОЛАШАҚТЫҢ ЗЕРТТЕУШІСІ</div><h1>ЖИ айтты екен деп,<br>бірден сенбе!</h1><p>Ақпаратты тексеруді үйрен: қателікті тап, дәлел келтір, өз жауабыңды құрастыр. Сен — ақпарат детективісің!</p><div class="hero-actions"><button class="btn btn-light" data-action="begin" data-id="${E(next.id)}">${ico('spark',16)} Миссияны бастау ${ico('arrow',16)}</button><button class="btn btn-outline-white" data-action="nav" data-id="method">5 қадаммен танысу</button></div></div><div class="hero-art" aria-hidden="true"><div class="orb"><div class="ai-face"><span>AI</span></div></div><div class="float-chip one">🔍 Тексер!</div><div class="float-chip two">💡 Дәлелде</div><div class="float-chip three">✓ Өз ойың</div></div></section>${scoreStats()}<div class="section-head"><div><h2>Зерттеу миссиялары</h2><p>Әр тапсырмада ЖИ жауабын тексерудің 5 кезеңінен өтесің.</p></div><button class="link-btn" data-action="nav" data-id="tasks">Барлығын көру →</button></div><section class="mission-grid">${allTasks().slice(0,6).map((t,i)=>missionCard(t,i)).join('')}</section>${framework()}`}
+function renderTasks(){const arr=allTasks();return `<div class="page-kicker">${ico('grid',16)} ОҚУ ЖАТТЫҒУЛАРЫ</div><h1 class="page-title">Ақпарат детективтері</h1><p class="page-sub">Жауапты жай ғана жаттама — күмәндан, тексер, қорытынды жаса. 24 интерактивті тапсырма дайын. Әр миссияда ЖИ жауабын бес қадаммен тексересің.</p><div class="section-head"><h2>Миссиялар картасы</h2><span class="pill">${completeCount()} / ${arr.length} аяқталды</span></div><div class="mission-grid">${arr.map((t,i)=>missionCard(t,i)).join('')}</div>${framework()}`}
+function guideSidebar(step,task){return `<div class="guide-card"><h3>Менің тексеру жолым</h3><ol class="guide-list">${guideNames.map((x,i)=>`<li class="${i<step?'complete':i===step?'active':''}"><span class="small-dot">${i<step?ico('check',13):i+1}</span><span>${E(x)}</span></li>`).join('')}</ol></div><div class="guide-card"><h3>💡 Зерттеушіге кеңес</h3><p class="muted" style="font-size:12px;margin:0">${E(task.tip||'ЖИ жауабын тексеру үшін дәлел ізде.')}</p></div><div class="guide-card"><h3>Жинаған ұпай</h3><div class="score-big">${state.run?.score||0}<span class="muted" style="font-size:13px"> / 8</span></div><div class="track"><span style="width:${((state.run?.score||0)/8*100)}%"></span></div><p style="font-size:11px;color:#8c9bad;margin:10px 0 0">Бұл — жаттығудың ойын ұпайы. Зерттеу диагностикасы бөлек бағаланады.</p></div>`}
+function renderMission(){const t=getTask(state.active);if(!t)return `<div class="panel">Миссия табылмады. <button data-action="nav" data-id="tasks" class="btn btn-primary">Тапсырмаларға оралу</button></div>`;const r=state.run;if(!r)return renderResults(t);if(t.type==='custom')return renderCustomRun(t);const n=r.step;const block=n===5?renderResults(t):n===4?renderReflection(t,r):renderQuizStep(t,r);return `<div class="lesson-header"><button class="back-btn" data-action="nav" data-id="tasks" aria-label="Миссияларға қайту">${ico('back',19)}</button><div><span class="eyebrow">${E(t.subject)} · ${n<5?'5 ҚАДАМНЫҢ '+(n+1)+'-І':'Миссия аяқталды'}</span><h1>${E(t.title)}</h1></div></div><div class="lesson-layout"><div class="lesson-body"><div class="lesson-steps">${guideNames.map((_,i)=>`<div class="lesson-segment ${i<n?'passed':i===n?'current':''}"></div>`).join('')}</div>${block}</div><div class="lesson-sidebar">${guideSidebar(n,t)}</div></div>`}
+function renderQuizStep(t,r){const s=t.checks[r.step],checked=r.feedback,chosen=r.selected;return `<div class="panel"><div class="eyebrow">${r.step+1}-қадам · ${E(guideNames[r.step])}</div><h2 class="lesson-stage">${E(guideDesc[r.step])}</h2><p class="lesson-intro">Келесі сұраққа ойлан. Дұрыс емес жауап таңдасаң, қайта көруге болады.</p><div class="ai-message"><div class="ai-title"><span class="ai-circle">🤖</span> ЖИ жауабы <span class="ai-corner">Жаттығу үлгісі</span></div><p class="muted" style="font-size:12px;margin:0 0 8px">Сұрақ: ${E(t.prompt)}</p><p class="ai-text">«${E(t.ai)}»</p></div>${r.step===2?`<div class="source-box"><b>📖 Тексеруге арналған дерек</b>${E(t.source)}</div>`:''}<div class="task-q">${E(s.q)}</div><div class="options" role="group" aria-label="Жауап нұсқалары">${s.opts.map((opt,i)=>`<button type="button" class="option ${chosen===i?'selected':''} ${checked==='correct'&&i===s.correct?'good':''} ${checked==='incorrect'&&chosen===i?'bad':''}" data-action="choose" data-index="${i}" ${checked==='correct'?'disabled':''} aria-pressed="${chosen===i?'true':'false'}"><span class="circle">${chosen===i?'✓':String.fromCharCode(65+i)}</span><span>${E(opt)}</span></button>`).join('')}</div>${checked?`<div class="feedback ${checked==='correct'?'success':'error'}" role="status"><div style="font-size:20px">${checked==='correct'?'✅':'🧐'}</div><div><strong>${checked==='correct'?'Жарайсың, дұрыс!':'Қайта ойланып көр.'}</strong><div>${E(checked==='correct'?s.why:'Бұл нұсқа сәйкес келмейді. Жауап пен дәлелді қайта салыстыр.')}</div></div></div>`:''}<div class="footer-actions"><span class="progress-note">${r.step+1} / 5 кезең</span>${checked==='correct'?`<button class="btn btn-primary" data-action="next">Келесі қадам ${ico('arrow',16)}</button>`:`<button class="btn btn-primary" data-action="check" ${chosen<0?'disabled':''}>Жауапты тексеру ${ico('check',16)}</button>`}</div></div>`}
+function renderReflection(t,r){return `<div class="panel"><div class="eyebrow">5-қадам · Қорытындыла</div><h2 class="lesson-stage">Өз ойыңмен аяқта!</h2><p class="lesson-intro">Өзіңнің қай тексеру тәсілін қолданғаныңды айт. Мұнда дұрыс немесе қате жауап жоқ.</p><div class="source-box"><b>✅ Тексерілген нұсқа</b>${E(t.model)}</div><div style="margin-top:19px" class="field"><label for="methodSelect">Қай тәсіл саған көбірек көмектесті?</label><select class="select" id="methodSelect"><option value="">Таңда...</option><option value="Есептеп тексердім">🧮 Есептеп тексердім</option><option value="Дерекпен салыстырдым">📖 Дерекпен салыстырдым</option><option value="Картамен немесе күнтізбемен тексердім">🗺️ Картамен / күнтізбемен тексердім</option><option value="Қарсы мысал таптым">🔎 Қарсы мысал таптым</option><option value="Пікір мен фактіні ажыраттым">💭 Пікір мен фактіні ажыраттым</option></select></div><div class="field"><label for="reflectText">Бүгін қандай қорытынды жасадың? <span class="muted">(міндетті емес)</span></label><textarea class="textarea" id="reflectText" placeholder="Мысалы: Мен жауапты есеппен тексердім. ЖИ қателесуі мүмкін...">${E(r.notes)}</textarea></div><div class="footer-actions"><div class="warning-box">🛡️ Жеке ақпаратыңды жазба.</div><button class="btn btn-teal" data-action="finish">Миссияны аяқтау ${ico('check',16)}</button></div></div>`}
+function finishQuiz(){const r=state.run,t=getTask(state.active);if(!r||r.step!==4)return;const method=document.getElementById('methodSelect').value;const notes=document.getElementById('reflectText').value.trim();if(!method){toast('Алдымен тексеру тәсілін таңда.');document.getElementById('methodSelect').focus();return}const prev=data.progress[t.id];data.progress[t.id]={score:Math.max(r.score,prev?.score||0),lastScore:r.score,completedAt:new Date().toISOString(),method,notes,attempts:(prev?.attempts||0)+1};save();state.run=null;render();window.scrollTo({top:0,behavior:'smooth'})}
+function renderResults(t){const p=data.progress[t.id]||{};return `<div class="lesson-header"><button class="back-btn" data-action="nav" data-id="tasks" aria-label="Миссияларға қайту">${ico('back',19)}</button><div><span class="eyebrow">НӘТИЖЕ</span><h1>${E(t.title)}</h1></div></div><div class="panel result-card"><div class="result-icon">🏅</div><div class="result-stars">★★★★★</div><h2>Миссия орындалды!</h2><p>Ақпаратты тексеру жолынан өттің. Енді ЖИ жауабына сын көзбен қарай аласың.</p><div class="score-big" style="color:#207e81">${p.lastScore??p.score??'—'} <span style="font-size:15px;color:#8191a5">/ 8 ұпай</span></div><div class="source-box" style="max-width:500px;margin:18px auto;text-align:left"><b>✅ Дұрыс қорытынды</b>${E(t.model)}</div><div class="result-actions"><button class="btn btn-primary" data-action="nav" data-id="tasks">Басқа миссиялар ${ico('arrow',16)}</button><button class="btn btn-outline" data-action="begin" data-id="${E(t.id)}">Қайта жаттығу</button><button class="btn btn-outline" data-action="print" data-id="${E(t.id)}">${ico('print',15)} Басып шығару</button></div></div>`}
+function renderCustomRun(t){if(state.revealed){return `<div class="lesson-header"><button class="back-btn" data-action="nav" data-id="tasks">${ico('back',18)}</button><h1>${E(t.title)}</h1></div><div class="panel"><div class="eyebrow">МҰҒАЛІМНІҢ ҮЛГІ ЖАУАБЫ</div><h2 class="lesson-stage">Өз жауабыңды салыстыр</h2><div class="source-box"><b>📖 Дәлел</b>${E(t.source)}</div><div class="reveal"><strong>✅ Дұрыс жауап үлгісі</strong><p style="margin:8px 0 0">${E(t.model)}</p></div><div class="warning-box" style="margin-top:15px">Бұл тапсырманың бағасын мұғалім рубрика бойынша қояды. Сайт мәтінді автоматты бағаламайды.</div><div class="footer-actions"><span class="muted" style="font-size:12px">Өз жауабыңды шынайы салыстыр.</span><button class="btn btn-teal" data-action="finish-custom">Салыстырдым, аяқтау ${ico('check',16)}</button></div></div>`}return `<div class="lesson-header"><button class="back-btn" data-action="nav" data-id="tasks">${ico('back',18)}</button><div><span class="eyebrow">МҰҒАЛІМ ҚОСҚАН ТАПСЫРМА</span><h1>${E(t.title)}</h1></div></div><div class="lesson-layout"><div class="lesson-body"><div class="panel"><div class="ai-message"><div class="ai-title"><span class="ai-circle">🤖</span> ЖИ үлгі жауабы</div><div class="muted" style="font-size:12px">Сұрақ: ${E(t.prompt)}</div><p class="ai-text">«${E(t.ai)}»</p></div><div class="answer-grid"><div class="field"><label for="custom1">1. Қай тұсы күмәнді?</label><textarea id="custom1" class="textarea" placeholder="Күмән тудырған сөйлемді белгіле..."></textarea></div><div class="field"><label for="custom2">2. Қандай дәлел керек?</label><textarea id="custom2" class="textarea" placeholder="Оқулық, ереже немесе дерек..."></textarea></div><div class="field"><label for="custom3">3. Өзің қалай түзетер едің?</label><textarea id="custom3" class="textarea" placeholder="Дұрыс жауапты өз сөзіңмен жаз..."></textarea></div></div><div class="footer-actions"><span class="muted" style="font-size:12px">Мұғаліммен бірге тексер</span><button class="btn btn-primary" data-action="reveal-custom">Үлгімен салыстыру ${ico('arrow',16)}</button></div></div></div><div class="lesson-sidebar"><div class="guide-card"><h3>🔎 Тексеру алгоритмі</h3><ol class="guide-list">${guideNames.map((x,i)=>`<li><span class="small-dot">${i+1}</span>${E(x)}</li>`).join('')}</ol></div><div class="tip-box">Мұғалім енгізген тапсырманың мәтінін сайт автоматты түрде бағаламайды.</div></div></div>`}
+function renderMethod(){const methodData=[['👀','Байқа','ЖИ берген жауапты мұқият оқы. Бұл дұрыс па, күмән бар ма?'],['🔍','Белгіле','Тексеретін нақты сөзді, санды немесе тұжырымды тап.'],['📚','Дәлелде','Оқулық, карта, күнтізбе, ереже немесе есеппен салыстыр.'],['✏️','Түзет','Қатені өз сөзіңмен дұрыстап жаз.'],['💡','Қорытындыла','Қай дәлел көмектескенін түсіндір, келесі жолы не тексеретініңді айт.']];return `<div class="page-kicker">${ico('steps',15)} СЫНИ ОЙЛАУ ӘДІСІ</div><h1 class="page-title">ЖИ жауабын тексерудің 5 қадамы</h1><p class="page-sub">Бұл — әр миссияны орындаудың басты алгоритмі. «Байқау – салыстыру – дәлелдеу – түзету – қорытындылау» үлгісіне сай жасалған.</p><div class="method-cards">${methodData.map(([emoji,name,desc],i)=>`<div class="method-card"><span class="method-num">ҚАДАМ ${i+1}</span><span class="method-icon">${emoji}</span><strong>${E(name)}</strong><p>${E(desc)}</p></div>`).join('')}</div><div class="two-col section-margin"><div class="panel"><span class="eyebrow">БІР МЫСАЛ</span><h2 style="margin:6px 0 17px;font-size:21px">ЖИ қателессе не істейміз?</h2><div class="comparison"><div class="compare-box"><strong>🤖 ЖИ ЖАУАБЫ</strong><p>«Бір аптада 8 күн бар».</p></div><div class="compare-box correct"><strong>✅ ТЕКСЕРІЛГЕН ЖАУАП</strong><p>«Бір аптада 7 күн бар».</p></div></div><p class="text-block"><strong>Дәлел:</strong> дүйсенбі, сейсенбі, сәрсенбі, бейсенбі, жұма, сенбі, жексенбі — барлығы 7 күн. ЖИ сенімді сөйлеуі мүмкін, бірақ жауапты нақты дерекпен тексереміз.</p><button class="btn btn-primary" data-action="begin" data-id="math">Миссия орындап көру ${ico('arrow',16)}</button></div><div class="panel"><span class="eyebrow">ЗЕРТТЕУШІ ЕРЕЖЕСІ</span><h2 style="margin:6px 0 16px;font-size:21px">Дәлел табудың 4 жолы</h2><div class="lesson-plan"><div class="plan-row"><div class="plan-num">01</div><div><strong>Есептеп тексер</strong><p>Амалдарды өзің орында немесе кері амал жаса.</p></div></div><div class="plan-row"><div class="plan-num">02</div><div><strong>Оқулыққа қара</strong><p>Ереже, сурет, анықтамамен салыстыр.</p></div></div><div class="plan-row"><div class="plan-num">03</div><div><strong>Карта мен күнтізбені аш</strong><p>Орын, күн немесе ай туралы деректі тексер.</p></div></div><div class="plan-row"><div class="plan-num">04</div><div><strong>Қарсы мысал ізде</strong><p>«Барлығы», «әрқашан» сөздеріне мән бер.</p></div></div></div></div></div><div class="callout"><span style="font-size:27px">🛡️</span><p><strong>Қауіпсіз жұмыс:</strong> оқушылар сайттағы дайын мысалдармен жұмыс істейді. Жеке мәлімет, пароль немесе басқа құпия ақпарат енгізудің қажеті жоқ. Бұл сайт сыртқы ЖИ сервисіне қосылмайды.</p></div>`}
+function renderTeacher(){const done=completeCount();const teacherMissions=allTasks();const rows=teacherMissions.map(t=>{const v=data.progress[t.id];return `<div class="bar-row"><span title="${E(t.title)}">${E(t.title)}</span><div class="bar-outer"><div class="bar-inner" style="width:${t.type==='custom'?(v?.completedAt?100:0):((v?.score||0)/8*100)}%"></div></div><strong>${v?.completedAt?(v.score==null?'✓':v.score+'/8'):'—'}</strong></div>`}).join('');return `<div class="page-kicker">${ico('teacher',16)} ПЕДАГОГИКАЛЫҚ ҚҰРАЛДАР</div><h1 class="page-title">Мұғалім кабинеті</h1><p class="page-sub">Сабақ жоспарын қолданыңыз, тапсырма қосыңыз және осы браузердегі орындалу нәтижесін қараңыз.</p><section class="teacher-hero"><div><h2>🧠 Сыни ойлау зертханасын басқарыңыз</h2><p>Мұнда дайын ЖИ-үлгі жауаптарымен жұмыс ұйымдастырылады. Нәтижелер сыныптық эксперимент деректері емес; олар тек осы құрылғыда сақталған жаттығулардың көрсеткіші.</p></div><span class="teacher-hero-icon">👩‍🏫</span></section><div class="teacher-grid"><div class="panel"><div class="section-head"><div><h2 style="font-size:18px">Орындалу көрсеткіші</h2><p>${done} тапсырма аяқталған · осы браузерде</p></div>${ico('chart',23)}</div>${rows||'<div class="empty">Әзірге нәтиже жоқ</div>'}<div class="footer-actions"><button class="btn btn-outline btn-sm" data-action="export">${ico('download',15)} CSV жүктеу</button><button class="btn btn-danger btn-sm" data-action="reset">${ico('trash',14)} Нәтижелерді өшіру</button></div></div><div class="panel"><h2 style="font-size:18px;margin:0 0 15px">8 балдық бағалау рубрикасы</h2><div class="table-wrap"><table class="rubric"><thead><tr><th>Критерий</th><th>0 балл</th><th>1 балл</th><th>2 балл</th></tr></thead><tbody><tr><td><strong>Қатені байқау</strong></td><td>Таппады</td><td>Көмекпен</td><td>Өзі тапты</td></tr><tr><td><strong>Дерекпен салыстыру</strong></td><td>Салыстырмады</td><td>Толық емес</td><td>Дұрыс салыстырды</td></tr><tr><td><strong>Дәлел келтіру</strong></td><td>Жоқ</td><td>Әлсіз</td><td>Нақты</td></tr><tr><td><strong>Жауапты түзету</strong></td><td>Қате</td><td>Жартылай</td><td>Толық дұрыс</td></tr></tbody></table></div><div class="tip-box" style="margin-top:14px">Бұл рубрика — мұғалімнің бастапқы және қорытынды диагностиканы бағалауына арналған. Ойын ұпайымен автоматты түрде теңестірілмейді.</div><button class="btn btn-outline btn-sm" style="margin-top:14px" data-action="print-rubric">${ico('print',15)} Рубриканы басып шығару</button></div></div><div class="teacher-grid section-margin"><div class="panel"><h2 style="font-size:19px;margin:0 0 6px">Тапсырма құрастыру студиясы</h2><p class="muted" style="font-size:12px;margin:0 0 18px">Өз пәніңізге сай ЖИ-үлгі жауабын енгізіп, оқушыларға өз сөздерімен түзетуді ұсыныңыз.</p><form id="teacherForm" class="form-grid"><div class="field"><label for="addTitle">Тапсырма атауы *</label><input class="text-input" id="addTitle" name="title" maxlength="90" placeholder="Мысалы: Есептің жауабын тексер" required></div><div class="field"><label for="addSubject">Пән</label><select class="select" id="addSubject" name="subject"><option>Математика</option><option>Жаратылыстану</option><option>Дүниетану</option><option>Қазақ тілі</option><option>Басқа пән</option></select></div><div class="field span-2"><label for="addPrompt">Сұрақ *</label><input class="text-input" id="addPrompt" name="prompt" maxlength="250" placeholder="Оқушыға қойылатын сұрақ" required></div><div class="field span-2"><label for="addAI">ЖИ-дің үлгі жауабы *</label><textarea class="textarea" id="addAI" name="ai" maxlength="700" placeholder="Әдейі тексеруге арналған жауапты енгізіңіз" required></textarea></div><div class="field span-2"><label for="addSource">Тексеруге арналған дерек / ереже *</label><textarea class="textarea" id="addSource" name="source" maxlength="700" placeholder="Мұғалім ұсынатын сенімді дерек" required></textarea></div><div class="field span-2"><label for="addModel">Дұрыс жауап үлгісі *</label><textarea class="textarea" id="addModel" name="model" maxlength="700" placeholder="Қате түзетілген жауап" required></textarea></div><div class="span-2"><button class="btn btn-primary btn-full" type="submit">${ico('edit',17)} Жаңа тапсырманы қосу</button></div></form>${data.custom.length?`<div class="separator"></div><h3 style="font-size:13px">Мен қосқан тапсырмалар (${data.custom.length})</h3>${data.custom.map(t=>`<div class="plan-row" style="align-items:center"><div class="plan-num">✦</div><div style="flex:1"><strong>${E(t.title)}</strong><p>${E(t.subject)}</p></div><button class="btn btn-danger btn-sm" data-action="delete-custom" data-id="${E(t.id)}" aria-label="${E(t.title)} тапсырмасын өшіру">${ico('trash',14)}</button></div>`).join('')}`:''}</div><div class="panel"><h2 style="font-size:19px;margin:0 0 6px">6 сабаққа арналған жоспар</h2><p class="muted" style="font-size:12px;margin:0 0 16px">24 тапсырма 6 сабаққа бөлінген: әр сабақта 4 қысқа миссия. Мұғалім оқушылардың деңгейіне қарай ретін өзгерте алады.</p><div class="lesson-plan"><div class="plan-row"><span class="plan-num">1</span><div><small>МАТЕМАТИКА · 1-САБАҚ</small><strong>Арифметикалық амалдар</strong><p>Қосу, азайту, көбейту және бөлуді тексеру.</p></div></div><div class="plan-row"><span class="plan-num">2</span><div><small>МАТЕМАТИКА · 2-САБАҚ</small><strong>Өлшем және геометрия</strong><p>Күнтізбе, периметр, бөлшек және уақыт.</p></div></div><div class="plan-row"><span class="plan-num">3</span><div><small>ЖАРАТЫЛЫСТАНУ · 3-САБАҚ</small><strong>Тіршілік және табиғат</strong><p>Балықтар, су күйлері, пингвин және өсімдік.</p></div></div><div class="plan-row"><span class="plan-num">4</span><div><small>ЖАРАТЫЛЫСТАНУ · 4-САБАҚ</small><strong>Табиғи құбылыстар</strong><p>Күн мен түн, су айналымы, қоректік тізбек, Ай.</p></div></div><div class="plan-row"><span class="plan-num">5</span><div><small>ҚАЗАҚ ТІЛІ · 5-САБАҚ</small><strong>Сөз мағынасы мен сөз табы</strong><p>Пікір, синоним, антоним және сын есім.</p></div></div><div class="plan-row"><span class="plan-num">6</span><div><small>ҚАЗАҚ ТІЛІ ЖӘНЕ ДҮНИЕТАНУ · 6-САБАҚ</small><strong>Сөйлем және географиялық дерек</strong><p>Тыныс белгісі, факт пен пікір, астана және материк.</p></div></div></div><div class="tip-box" style="margin-top:17px"><b>Сыныпта қолдану:</b> бір миссияға 5–10 минут бөліңіз. Оқушыларды алдымен өздігінен ойлантып, кейін жұппен дәлелдеуге бағыттаңыз.</div></div></div>`}
+function renderAbout(){return `<div class="page-kicker">${ico('info',16)} ЖОБА ТУРАЛЫ</div><h1 class="page-title">ОйLAB — ақылды жауап емес, ақылды тексеру</h1><p class="page-sub">4-сынып оқушыларының жасанды интеллект жауабын тексеру арқылы сыни ойлау дағдысын дамытуға арналған оқу-әдістемелік интерактивті платформа.</p><div class="two-col"><div class="panel"><div class="eyebrow">ЖОБАНЫҢ МАҚСАТЫ</div><h2 style="font-size:23px;margin:8px 0">Жауапты тексеретін ойлау дағдысын қалыптастыру</h2><p class="text-block">Оқушы дайын жауапты қабылдап қана қоймай, нақты тұжырымды анықтайды, оқулыққа, ережеге, картаға немесе есепке жүгінеді, дәлел келтіреді және қатені түзетеді. Оқыту моделінің негізі — бес қадамды алгоритм және деңгейлеп берілген практикалық тапсырмалар.</p><div class="separator"></div><div class="page-kicker">${ico('shield',15)} МАҢЫЗДЫ ШЕКТЕУЛЕР</div><p class="text-block">Сайттағы «ЖИ жауабы» — мұғалім алдын ала дайындаған <strong>жаттығу мәтіні</strong>. Нақты уақытта жауап жасайтын жасанды интеллект моделі немесе сыртқы API қолданылмайды. Оқушының тапсырма нәтижесі <strong>тек осы браузерде</strong> сақталады. Бірнеше құрылғының нәтижесін ортақ базаға жинау қарастырылмаған.</p></div><div class="panel"><h2 style="font-size:20px;margin:0 0 16px">Платформаның мүмкіндіктері</h2><div class="lesson-plan"><div class="plan-row"><span class="plan-num">01</span><div><strong>24 интерактивті миссия</strong><p>Математика, жаратылыстану, дүниетану және қазақ тілі бойынша.</p></div></div><div class="plan-row"><span class="plan-num">02</span><div><strong>Бес сатылы тексеру</strong><p>Байқау, белгілеу, дәлелдеу, түзету, қорытынды.</p></div></div><div class="plan-row"><span class="plan-num">03</span><div><strong>Кері байланыс және ұпай</strong><p>Әр жауапқа бірден түсіндірме беріледі.</p></div></div><div class="plan-row"><span class="plan-num">04</span><div><strong>Мұғалім тапсырмалары</strong><p>Еркін мәтінді тексеру карточкаларын қосу.</p></div></div><div class="plan-row"><span class="plan-num">05</span><div><strong>CSV есеп және офлайн жұмыс</strong><p>Жетістіктерді осы құрылғыдан көруге және сақтауға болады.</p></div></div></div></div></div><div class="callout"><span style="font-size:27px">🎓</span><p><strong>Курстық жұмыс тақырыбы:</strong> «4-сыныпта жасанды интеллект жауабын тексеру арқылы оқушылардың сыни ойлауын қалыптастыру». Бұл прототип практикалық бөлімге арналған оқу құралы ретінде жасалды. Шынайы педагогикалық нәтиже туралы тұжырым жасау үшін сабақта бағалау және талдау жүргізу қажет.</p></div>`}
+function download(name,text,mime){const blob=new Blob([text],{type:mime});const a=document.createElement('a');const url=URL.createObjectURL(blob);a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function exportCSV(){const rows=[['Тапсырма','Пән','Нәтиже (8 балл)','Аяқталған күні','Тексеру тәсілі','Қайталау саны'],...allTasks().map(t=>{const p=data.progress[t.id]||{};return [t.title,t.subject,p.score??'',formatDate(p.completedAt),p.method||'',p.attempts||0]})];const text=rows.map(row=>row.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(';')).join('\r\n');download('OyLAB_natzheler.csv','\ufeff'+text,'text/csv;charset=utf-8');toast('CSV файл сақтауға дайын.')}
+function printRubric(){const before=state.page;state.page='teacher';render();window.print();state.page=before}
+function printMission(id){const t=getTask(id);if(!t)return;const html=`<html lang="kk"><head><meta charset="utf-8"><title>${E(t.title)} — Жұмыс парағы</title><style>body{font-family:Arial,sans-serif;max-width:760px;margin:36px auto;line-height:1.55;color:#1e3654}h1{font-size:23px}h2{font-size:15px;margin-top:26px}.ai{border:1px solid #bfc9d9;padding:15px;border-radius:9px;background:#f5f7fb}.line{height:56px;border-bottom:1px dashed #a2aab5}.note{font-size:12px;color:#657287}header{display:flex;justify-content:space-between;border-bottom:2px solid #1b4c8d;padding-bottom:12px}.footer{border-top:1px solid #ddd;margin-top:30px;padding-top:10px;font-size:11px}</style></head><body><header><b>ОйLAB · 4-сынып</b><span>${E(t.subject)}</span></header><h1>Жұмыс парағы: ${E(t.title)}</h1><p>Аты-жөні: ___________________________________ Күні: __________</p><div class="ai"><b>Сұрақ:</b> ${E(t.prompt)}<p><b>ЖИ жауабы:</b> «${E(t.ai)}»</p></div>${['1. Қай сөйлем күмәнді?','2. Қай дерекпен салыстырдың?','3. Қандай дәлел келтіресің?','4. Дұрыс жауапты жаз.','5. Қорытынды: бүгін нені түсіндің?'].map(x=>`<h2>${x}</h2><div class="line"></div>`).join('')}<div class="footer">Ақпаратты оқы → белгіле → салыстыр → түзет → қорытындыла. Мұғалімге арналған дұрыс жауап: ${E(t.model)}</div></body></html>`;const win=window.open('','_blank');if(!win){toast('Браузер қалқымалы терезені бұғаттады.');return}win.document.open();win.document.write(html);win.document.close();win.focus();setTimeout(()=>win.print(),250)}
+function saveCustomTask(form){const fd=new FormData(form);const obj=Object.fromEntries(fd.entries());for(const key of ['title','prompt','ai','source','model'])if(!String(obj[key]||'').trim()){toast('Міндетті жолдардың бәрін толтырыңыз.');return}const id='custom_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7);data.custom.push({id,type:'custom',subject:String(obj.subject||'Басқа пән'),title:String(obj.title).trim(),prompt:String(obj.prompt).trim(),ai:String(obj.ai).trim(),source:String(obj.source).trim(),model:String(obj.model).trim(),desc:'Мұғалім құрастырған тексеру тапсырмасы.',emoji:'🧩',color:'purple',tip:'Дерекке сүйеніп, дұрыс жауапты өз сөзіңмен жаз.'});save();render();toast('Тапсырма қосылды. Миссиялар бөлімінен ашуға болады.')}
+function handleAction(btn){const action=btn.dataset.action,id=btn.dataset.id;switch(action){case 'nav':navTo(id);break;case 'begin':begin(id);break;case 'choose':{const r=state.run;if(!r||r.step>=4||r.feedback==='correct')break;r.selected=Number(btn.dataset.index);r.feedback=null;render();break}case 'check':{const r=state.run,t=getTask(state.active);if(!r||r.step>=4||r.selected<0||!t)break;const s=t.checks[r.step];if(r.selected===s.correct){r.feedback='correct';r.score+=r.firstWrong?1:2}else{r.feedback='incorrect';r.firstWrong=true}render();break}case 'next':{const r=state.run;if(!r||r.feedback!=='correct')break;r.step++;r.selected=-1;r.feedback=null;r.firstWrong=false;render();break}case 'finish':finishQuiz();break;case 'reveal-custom':{const inputs=['custom1','custom2','custom3'].map(x=>document.getElementById(x)?.value?.trim());if(inputs.some(v=>!v)){toast('Алдымен үш өріске де өз жауабыңды жаз.');break}state.revealed=true;render();break}case 'finish-custom':{const t=getTask(state.active);const prev=data.progress[t.id];data.progress[t.id]={score:null,completedAt:new Date().toISOString(),method:'Мұғаліммен өзіндік тексеру',attempts:(prev?.attempts||0)+1};save();state.run=null;state.revealed=false;navTo('tasks');toast('Тапсырма аяқталды!');break}case 'export':exportCSV();break;case 'reset':if(confirm('Осы браузерде сақталған барлық оқу нәтижелерін өшіресіз бе? Мұғалім қосқан тапсырмалар сақталады.')){data.progress={};save();render();toast('Оқу нәтижелері тазартылды.')}break;case 'print':printMission(id);break;case 'print-rubric':window.print();break;case 'delete-custom':if(confirm('Осы тапсырманы өшіру керек пе?')){data.custom=data.custom.filter(t=>t.id!==id);delete data.progress[id];save();render();toast('Тапсырма өшірілді.')}break;default:break}}
+document.addEventListener('click',e=>{const btn=e.target.closest('[data-action]');if(btn&&!btn.disabled){handleAction(btn)}});
+document.addEventListener('submit',e=>{if(e.target.id==='teacherForm'){e.preventDefault();saveCustomTask(e.target)}});
+render();
+</script>
 </body>
 </html>
